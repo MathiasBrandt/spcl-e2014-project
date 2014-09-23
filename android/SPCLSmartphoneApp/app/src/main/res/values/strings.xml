@@ -1,3 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">SPCL Smartphone App</string>
+    <string name="title_activity_role_chooser">RoleChooserActivity</string>
+    <string name="pleaseChoose">Please Choose a Role:</string>
+    <string name="action_settings">Settings</string>
+    <string name="btnOfficeRole">Office Role</string>
+    <string name="btnVisitorRole">Visitor Role</string>
+    <string name="title_activity_office_main">OfficeMainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_visitor_main">VisitorMainActivity</string>
+
 </resources>

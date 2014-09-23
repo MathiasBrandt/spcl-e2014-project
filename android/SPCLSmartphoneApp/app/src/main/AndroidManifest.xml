@@ -1,11 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dk.itu.group10.spclsmartphoneapp">
+    package="dk.itu.group10.spclsmartphoneapp" >
 
-    <application android:allowBackup="true"
-        android:label="@string/app_name"
+    <application
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/AppTheme">
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".RoleChooserActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".OfficeMainActivity"
+            android:label="@string/title_activity_office_main"
+            android:parentActivityName=".RoleChooserActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dk.itu.group10.spclsmartphoneapp.RoleChooserActivity" />
+        </activity>
+        <activity
+            android:name=".VisitorMainActivity"
+            android:label="@string/title_activity_visitor_main"
+            android:parentActivityName=".RoleChooserActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dk.itu.group10.spclsmartphoneapp.RoleChooserActivity" />
+        </activity>
     </application>
 
 </manifest>
