@@ -57,25 +57,18 @@ public class SensorService extends IntentService {
     private void startAccelSensor() {
         Log.i(TAG, "Registering for Accelerometer Sensor");
         // ShakeDetector initialization
+        mAccelSensorListener = new AccelSensorListener(this);
         mAccelSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometerSensor = mAccelSensorManager
                 .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            mAccelSensorListener = new AccelSensorListener();
-        if (mAccelSensorListener != null) {
-            mAccelSensorListener.setOnShakeListener(new AccelSensorListener.OnShakeListener() {
-
-                @Override
-                public void onShake(int count) {
-                    Log.i(TAG, "Device is being shaked");
-                    handleShakeEvent(count);
-                }
-            });
+        if (mAccelerometerSensor != null) {
+            mAccelSensorManager.registerListener(mAccelSensorListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
             Log.e(TAG, "AccelerometerListener error");
         }
     }
 
-    private void handleShakeEvent(int count) {
+    public void handleShakeEvent(int count) {
         Log.i(TAG, "Count: " + count);
         if (count >= 2) {
 
@@ -95,7 +88,7 @@ public class SensorService extends IntentService {
                     this.getSystemService(NOTIFICATION_SERVICE);
             notificationManager.notify(0, notification);
 
-            //mSensorManager.unregisterListener(mAccelSensorListener);
+            mSensorManager.unregisterListener(mAccelSensorListener);
         }
     }
 }

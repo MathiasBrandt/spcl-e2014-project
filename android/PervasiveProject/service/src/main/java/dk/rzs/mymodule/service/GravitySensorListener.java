@@ -29,6 +29,8 @@ public class GravitySensorListener implements SensorEventListener {
         float z = event.values[2];
         if (z < -9.0) {
            Log.i(TAG, "DISPLAY WAS TURNED UPSIDE DOWN:)");
+
+
             // Notification setting below are activated when gravity sensor detects value -9
             // Notification should be moved to another separate class as we need it often, and to remove responsibility from this class.
             // create notification that sensor has started
