@@ -40,8 +40,8 @@ public class GravitySensorListener implements SensorEventListener {
             Notification notification = new Notification.Builder(mSensorService)
                     .setTicker(r.getString(R.string.gravity_notification))
                     .setSmallIcon(android.R.drawable.ic_menu_report_image)
-                    .setContentTitle(r.getString(R.string.notification_title))
-                    .setContentText(r.getString(R.string.notification_text))
+                    .setContentTitle(r.getString(R.string.gravity_notification_title))
+                    .setContentText(r.getString(R.string.gravity_notification_text))
                             //.setContentIntent(pi)
                     .setAutoCancel(true)
                     .build();
