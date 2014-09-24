@@ -1,1 +1,1 @@
-include ':app', ':shake', ':Pervasive', ':service'
+include ':service'

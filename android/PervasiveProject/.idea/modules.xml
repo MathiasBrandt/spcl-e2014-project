@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Pervasive/Pervasive.iml" filepath="$PROJECT_DIR$/Pervasive/Pervasive.iml" />
       <module fileurl="file://$PROJECT_DIR$/PervasiveProject.iml" filepath="$PROJECT_DIR$/PervasiveProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/SensorAppTests.iml" filepath="$PROJECT_DIR$/SensorAppTests.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/service/service.iml" filepath="$PROJECT_DIR$/service/service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shake/shake.iml" filepath="$PROJECT_DIR$/shake/shake.iml" />
     </modules>
   </component>
 </project>
