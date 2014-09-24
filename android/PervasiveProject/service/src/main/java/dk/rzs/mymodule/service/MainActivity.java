@@ -1,6 +1,5 @@
 package dk.rzs.mymodule.service;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -8,9 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
 
 
 public class MainActivity extends SingleFragmentActivity implements Callback {
@@ -48,6 +44,7 @@ public class MainActivity extends SingleFragmentActivity implements Callback {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     public void changeFragment(Fragment fragment) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.replace(R.id.fragmentContainer, fragment);

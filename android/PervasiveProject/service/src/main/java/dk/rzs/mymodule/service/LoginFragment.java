@@ -3,6 +3,7 @@ package dk.rzs.mymodule.service;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -45,6 +46,15 @@ public class LoginFragment extends Fragment {
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Start sensor service
+                Intent i = new Intent(getActivity(), SensorService.class);
+                getActivity().startService(i);
+
+                // Implementation to save username, password and other info for server (how much info do we need?)
+
+                // Implementation to POST information to server
+
+                // open fragment to submit message to display (perhaps should just close fragment and only run app in BG until service detects NFC?)
                 mCallback.changeFragment(new MessageFragment());
             }
         });

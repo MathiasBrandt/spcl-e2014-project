@@ -9,4 +9,9 @@
     <string name="submit_message">Submit your message</string>
     <string name="login">Login...</string>
 
+    <string name="gravity_notification">You are now set as BUSY.</string>
+    <string name="accelerometer_notification">You are now set as AVAILABLE</string>
+    <string name="notification_title">Pervasive Project</string>
+    <string name="notification_text">Do not disturb service running</string>
+
 </resources>
