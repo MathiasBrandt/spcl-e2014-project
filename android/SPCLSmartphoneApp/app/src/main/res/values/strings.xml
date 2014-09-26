@@ -10,5 +10,9 @@
     <string name="title_activity_office_main">OfficeMainActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_visitor_main">VisitorMainActivity</string>
+    <string name="title_activity_login">Login</string>
+    <string name="btnCreateUser">Create User</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="create_user">Please create a user to proceed</string>
 
 </resources>
