@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".RoleChooserActivity"
+            android:name=".LoginActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,20 +17,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OfficeMainActivity"
-            android:label="@string/title_activity_office_main"
-            android:parentActivityName=".RoleChooserActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="dk.itu.group10.spclsmartphoneapp.RoleChooserActivity" />
-        </activity>
-        <activity
-            android:name=".VisitorMainActivity"
-            android:label="@string/title_activity_visitor_main"
-            android:parentActivityName=".RoleChooserActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="dk.itu.group10.spclsmartphoneapp.RoleChooserActivity" />
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
         </activity>
     </application>
 
