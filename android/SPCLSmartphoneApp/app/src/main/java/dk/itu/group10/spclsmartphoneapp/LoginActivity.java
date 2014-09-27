@@ -10,11 +10,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+
 
 public class LoginActivity extends Activity {
     private static final String TAG = "LoginActivity";
     private static final String PREFS_USER_ID_KEY = "USER_ID";
     private static final int PREFS_DEFAULT_USER_ID = -1;
+    private static final String API_CREATE_USER_URL = "http://178.62.255.11/users";
 
     private EditText txtName;
     private EditText txtPhone;
@@ -24,6 +37,9 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // DEBUGGING
+        saveUserId(PREFS_DEFAULT_USER_ID);
 
         // check preferences for user id
         int userId = getStoredUserId();
@@ -69,23 +85,23 @@ public class LoginActivity extends Activity {
     }
 
     class CreateUserAsyncTask extends AsyncTask<Void, Void, Integer> {
-        ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
-        String name;
-        String phone;
-        String email;
+        private static final String NAME_KEY = "Name";
+        private static final String PHONE_KEY = "Phone";
+        private static final String EMAIL_KEY = "Email";
+
+        private ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
+        private String name;
+        private String phone;
+        private String email;
 
         @Override
         protected Integer doInBackground(Void... voids) {
+            // TODO: validate input fields
+
             int userId = -1;
 
-            try {
-                Thread.sleep(3000);
-
-                // fetch user id from server
-                userId = 1;
-            } catch(InterruptedException e) {
-                Log.d(TAG, "Interrupted");
-            }
+            // create a user and get the user id
+            userId = createUser();
 
             return userId;
         }
@@ -119,6 +135,48 @@ public class LoginActivity extends Activity {
 
             // navigate to main activity
             navigateToMainActivity();
+        }
+
+        private int createUser() {
+            HttpClient client = new DefaultHttpClient();
+            HttpPost postRequest = new HttpPost(API_CREATE_USER_URL);
+            HttpResponse response = null;
+
+            User user = new User(name, phone, email, "1");
+            StringEntity params = null;
+            try {
+                params = new StringEntity(user.getJson());
+            } catch (UnsupportedEncodingException e) {
+                Log.d(TAG, "UnsupportedEncodingException");
+            }
+            postRequest.setEntity(params);
+            postRequest.addHeader("content-type", "application/json");
+
+            try {
+                response = client.execute(postRequest);
+            } catch (ClientProtocolException e) {
+                Log.d(TAG, "ClientProtocolException");
+            } catch (IOException e) {
+                Log.d(TAG, "IOException");
+            }
+
+            Log.d(TAG, "Status code: " + response.getStatusLine().getStatusCode());
+
+            if(response != null && response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                // read the response (the user id)
+                try {
+                    InputStreamReader isr = new InputStreamReader(response.getEntity().getContent());
+                    char[] buffer = new char[512];
+                    isr.read(buffer);
+                    Log.d(TAG, new String(buffer));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            Log.d(TAG, "Could not create user");
+            return -1;
         }
     }
 }
