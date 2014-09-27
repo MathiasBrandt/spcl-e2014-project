@@ -11,18 +11,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 
 import dk.itu.group10.spclsmartphoneapp.common.Common;
 import dk.itu.group10.spclsmartphoneapp.models.User;
@@ -55,8 +45,6 @@ public class LoginActivity extends Activity {
         txtPhone = (EditText) findViewById(R.id.txtPhone);
         txtEmail = (EditText) findViewById(R.id.txtEmail);
     }
-
-
 
     /***
      * Navigates the user interface to MainActivity.
@@ -100,49 +88,13 @@ public class LoginActivity extends Activity {
          * @return the id of the newly created user or -1 on failure.
          */
         private int postUser() {
-            HttpClient client = new DefaultHttpClient();
-            HttpPost postRequest = new HttpPost(Common.API_CREATE_USER);
-            postRequest.addHeader("content-type", "application/json");
-            HttpResponse response = null;
-
             User user = new User(name, phone, email, "1");
             String userJson = Common.serializeUser(user);
 
-            StringEntity params = null;
-
-            try {
-                params = new StringEntity(userJson);
-            } catch (UnsupportedEncodingException e) {
-                Log.d(TAG, "UnsupportedEncodingException");
-            }
-
-            postRequest.setEntity(params);
-
-            try {
-                Log.d(TAG, String.format("Creating new user: %s", userJson));
-
-                response = client.execute(postRequest);
-            } catch (ClientProtocolException e) {
-                Log.d(TAG, "ClientProtocolException");
-            } catch (IOException e) {
-                Log.d(TAG, "IOException");
-            }
-
-            Log.d(TAG, "Server returned status code: " + response.getStatusLine().getStatusCode());
-
-            String responseString = "";
+            HttpResponse response = Common.sendHttpPost(Common.API_CREATE_USER, userJson);
 
             if(response != null && response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                // read the response (the user id)
-                try {
-                    InputStream is = response.getEntity().getContent();
-                    responseString = IOUtils.toString(is);
-
-                    Log.d(TAG, "Full response: " + responseString);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                String responseString = Common.parseHttpResponse(response);
                 user = Common.deserializeUser(responseString);
                 return user.getId();
             }
