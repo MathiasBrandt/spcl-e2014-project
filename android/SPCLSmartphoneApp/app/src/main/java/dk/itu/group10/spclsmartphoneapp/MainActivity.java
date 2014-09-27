@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 
         User user = Common.getUserFromPreferences(MainActivity.this);
         TextView tvTemp = (TextView) findViewById(R.id.tvTemp);
-        tvTemp.setText(String.format("Your id is: %d", user.getId()));
+        tvTemp.setText(String.format("LOGGED IN AS: %s (%d), %s, %s", user.getName(), user.getId(), user.getEmail(), user.getPhone()));
     }
 
     @Override

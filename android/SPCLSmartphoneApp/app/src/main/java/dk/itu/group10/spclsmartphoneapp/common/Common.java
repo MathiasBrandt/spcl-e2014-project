@@ -239,7 +239,7 @@ public class Common {
          * @return the id of the newly created user or -1 on failure.
          */
         private User postUser() {
-            User user = new User(name, phone, email, "1");
+            User user = new User(name, phone, email, 1);
             String userJson = Common.serializeUser(user);
 
             HttpResponse response = Common.sendHttpPost(Common.API_CREATE_USER, userJson);

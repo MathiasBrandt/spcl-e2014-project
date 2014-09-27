@@ -12,13 +12,13 @@ public class User {
     private String phone;
     private String email;
     @SerializedName("status_id")
-    private String statusId;
+    private int statusId;
 
     public User() {
 
     }
 
-    public User(String name, String phone, String email, String statusId) {
+    public User(String name, String phone, String email, int statusId) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -28,6 +28,10 @@ public class User {
     public int getId() {
         return id;
     }
+    public String getName() { return name; }
+    public String getPhone() { return phone; }
+    public String getEmail() { return email; }
+    public int getStatusId() { return statusId; }
 
     @Override
     public String toString() {
