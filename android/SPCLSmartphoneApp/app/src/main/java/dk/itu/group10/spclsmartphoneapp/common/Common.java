@@ -41,6 +41,7 @@ public class Common {
     private static final String TAG = "Common";
     public static final String PREFERENCES_NAME = "SpclAppPreferences";
     public static final String PREFERENCES_KEY_USER = "PREFS_KEY_USER";
+    public static final String PARENT_KEY = "Parent";
     public static final String API_CREATE_USER = "http://178.62.255.11/users";
     public static final String API_LIST_USERS = "http://178.62.255.11/users";
 
@@ -199,8 +200,21 @@ public class Common {
     /***
      * Navigates the user interface to MainActivity.
      */
-    public static void navigateToActivity(Activity from, Class<?> to) {
+    public static void navigateToActivity(Activity from, Class<?> to, Boolean keepInHistory) {
+        navigateToActivity(from, to, null, keepInHistory);
+    }
+
+    public static void navigateToActivity(Activity from, Class<?> to, Class<?> parent, Boolean keepInHistory) {
         Intent i = new Intent(from, to);
+
+        if(keepInHistory) {
+            i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        }
+
+        if(parent != null) {
+            i.putExtra(PARENT_KEY, parent);
+        }
+
         from.startActivity(i);
     }
 
@@ -279,13 +293,13 @@ public class Common {
                 Toast.makeText(context, context.getString(R.string.create_user_success_message), Toast.LENGTH_SHORT).show();
 
                 // navigate to main activity
-                navigateToActivity(context, MainActivity.class);
+                navigateToActivity(context, MainActivity.class, false);
             } else {
                 // create an alert dialog showing an error message
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(R.string.create_user_error_title)
                         .setMessage(context.getString(R.string.create_user_error_message))
-                        .setPositiveButton("OK", null);
+                        .setPositiveButton(R.string.btnOk, null);
 
                 AlertDialog dialog = builder.create();
                 dialog.show();

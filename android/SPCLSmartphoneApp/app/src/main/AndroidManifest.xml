@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".CreateUserActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+            android:label="@string/title_activity_create_user">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +25,18 @@
         <activity
             android:name=".LoginExistingUserActivity"
             android:label="@string/title_activity_login_existing_user"
-            android:parentActivityName=".CreateUserActivity" >
+            android:parentActivityName=".ProfileActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="dk.itu.group10.spclsmartphoneapp.CreateUserActivity" />
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="dk.itu.group10.spclsmartphoneapp.MainActivity" />
         </activity>
     </application>
 

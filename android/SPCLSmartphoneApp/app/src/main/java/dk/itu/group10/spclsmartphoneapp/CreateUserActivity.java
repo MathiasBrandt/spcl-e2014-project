@@ -1,7 +1,7 @@
 package dk.itu.group10.spclsmartphoneapp;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +22,9 @@ public class CreateUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
 
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
+
         // TODO: DEBUGGING REMOVE THIS
         //Common.saveUserToPreferences(this, Common.DEFAULT_USER_ID);
 
@@ -30,7 +33,8 @@ public class CreateUserActivity extends Activity {
 
         // if a user id was found, navigate to main activity
         if(user != null) {
-            Common.navigateToActivity(this, MainActivity.class);
+            Common.navigateToActivity(this, MainActivity.class, false);
+            finish();
         }
 
         txtName = (EditText) findViewById(R.id.txtName);
@@ -56,8 +60,8 @@ public class CreateUserActivity extends Activity {
      * @param v
      */
     public void btnLoginExistingUserOnClick(View v) {
-        Intent i = new Intent(CreateUserActivity.this, LoginExistingUserActivity.class);
-        startActivity(i);
+        //TODO: false => true?
+        Common.navigateToActivity(this, LoginExistingUserActivity.class, CreateUserActivity.class, false);
     }
 
 

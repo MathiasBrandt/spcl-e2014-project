@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SPCL Smartphone App</string>
-    <string name="title_activity_role_chooser">RoleChooserActivity</string>
-    <string name="pleaseChoose">Please Choose a Role:</string>
-    <string name="action_settings">Settings</string>
-    <string name="btnOfficeRole">Office Role</string>
-    <string name="btnVisitorRole">Visitor Role</string>
-    <string name="title_activity_office_main">OfficeMainActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_visitor_main">VisitorMainActivity</string>
-    <string name="title_activity_login">Login</string>
+
+    <string name="app_name">SPCL Smartphone App</string>
+
+    <string name="title_activity_create_user">Create New User</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_login_existing_user">Select Existing User</string>
+    <string name="title_activity_profile">Profile</string>
+
     <string name="btnCreateUser">Create User</string>
     <string name="btnLoginExistingUser">Login With Existing User</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="btnSwitchUser">Switch User</string>
+    <string name="btnLogout">Logout</string>
+    <string name="btnYes">YES</string>
+    <string name="btnNo">NO</string>
+    <string name="btnOk">OK</string>
+
     <string name="create_user">Please create a user to proceed</string>
     <string name="select_user">Please select an existing user to proceed</string>
-    <string name="create_user_loading_title">Creating User</string>
     <string name="please_wait_message">Please wait ...</string>
-    <string name="create_user_error_title">Error</string>
     <string name="create_user_error_message">There was an error when attempting to create a user on the server. Please try again.</string>
     <string name="create_user_success_message">User was successfully created</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_login_existing_user">LoginExistingUserActivity</string>
+    <string name="quit_app_message">Are you sure you want to quit?</string>
+
+    <string name="create_user_loading_title">Creating User</string>
+    <string name="create_user_error_title">Error</string>
     <string name="loading_existing_users_title">Downloading Users</string>
-    <string name="action_switch_user">Switch User</string>
+    <string name="quit_app_title">Really Quit?</string>
+
+    <string name="action_profile">Profile</string>
+
+    <string name="profile_name">Name:</string>
+    <string name="profile_email">E-mail:</string>
+    <string name="profile_phone">Phone:</string>
 
 </resources>
