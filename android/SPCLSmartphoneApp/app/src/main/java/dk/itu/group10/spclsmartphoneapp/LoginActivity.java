@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -27,12 +24,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
+import dk.itu.group10.spclsmartphoneapp.common.Common;
+import dk.itu.group10.spclsmartphoneapp.models.User;
+
 
 public class LoginActivity extends Activity {
     private static final String TAG = "LoginActivity";
-    private static final String PREFS_USER_ID_KEY = "USER_ID";
-    private static final int PREFS_DEFAULT_USER_ID = -1;
-    private static final String API_CREATE_USER_URL = "http://178.62.255.11/users";
 
     private EditText txtName;
     private EditText txtPhone;
@@ -44,13 +41,13 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
         // TODO: DEBUGGING REMOVE THIS
-        saveUserId(PREFS_DEFAULT_USER_ID);
+        Common.saveUserIdToPreferences(this, Common.DEFAULT_USER_ID);
 
         // check preferences for user id
-        int userId = getStoredUserId();
+        int userId = Common.getUserIdFromPreferences(this);
 
         // if a user id was found, navigate to main activity
-        if(userId != PREFS_DEFAULT_USER_ID) {
+        if(userId != Common.DEFAULT_USER_ID) {
             navigateToMainActivity();
         }
 
@@ -59,34 +56,7 @@ public class LoginActivity extends Activity {
         txtEmail = (EditText) findViewById(R.id.txtEmail);
     }
 
-    /***
-     * Retrieves the user id stored in SharedPreferences.
-     * @return the stored user id or -1 if no user is exists in SharedPreferences.
-     */
-    private int getStoredUserId() {
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        int userId = preferences.getInt(PREFS_USER_ID_KEY, PREFS_DEFAULT_USER_ID);
 
-        if(userId != PREFS_DEFAULT_USER_ID) {
-            Log.d(TAG, String.format("User id found in preferences: %d", userId));
-        } else {
-            Log.d(TAG, String.format("No user id found in preferences (%d)", userId));
-        }
-
-        return userId;
-    }
-
-    /***
-     * Saves a user id to SharedPreferences.
-     * @param userId the user id to save.
-     */
-    private void saveUserId(int userId) {
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-
-        Log.d(TAG, String.format("Saving new user id to preferences: %d", userId));
-
-        preferences.edit().putInt(PREFS_USER_ID_KEY, userId).apply();
-    }
 
     /***
      * Navigates the user interface to MainActivity.
@@ -131,12 +101,12 @@ public class LoginActivity extends Activity {
          */
         private int postUser() {
             HttpClient client = new DefaultHttpClient();
-            HttpPost postRequest = new HttpPost(API_CREATE_USER_URL);
+            HttpPost postRequest = new HttpPost(Common.API_CREATE_USER);
             postRequest.addHeader("content-type", "application/json");
             HttpResponse response = null;
 
             User user = new User(name, phone, email, "1");
-            String userJson = serializeUser(user);
+            String userJson = Common.serializeUser(user);
 
             StringEntity params = null;
 
@@ -173,12 +143,12 @@ public class LoginActivity extends Activity {
                     e.printStackTrace();
                 }
 
-                user = deserializeUser(responseString);
+                user = Common.deserializeUser(responseString);
                 return user.getId();
             }
 
             Log.d(TAG, "Could not create user");
-            return PREFS_DEFAULT_USER_ID;
+            return Common.DEFAULT_USER_ID;
         }
 
         @Override
@@ -201,12 +171,12 @@ public class LoginActivity extends Activity {
             super.onPostExecute(userId);
 
             // save user id to preferences
-            saveUserId(userId);
+            Common.saveUserIdToPreferences(LoginActivity.this, userId);
 
             // dismiss the loading dialog
             loadingDialog.dismiss();
 
-            if(userId != PREFS_DEFAULT_USER_ID) {
+            if(userId != Common.DEFAULT_USER_ID) {
                 // show success message
                 Toast.makeText(LoginActivity.this, getApplication().getString(R.string.create_user_success_message), Toast.LENGTH_SHORT).show();
 
@@ -222,26 +192,6 @@ public class LoginActivity extends Activity {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
-        }
-
-        /***
-         * Serializes a user into JSON.
-         * @param user the user object to serialize.
-         * @return a JSON string representing the user.
-         */
-        private String serializeUser(User user) {
-            Gson gson = new Gson();
-            return gson.toJson(user);
-        }
-
-        /***
-         * Deserializes a JSON string into a user object.
-         * @param json the JSON string to deserialize.
-         * @return a user object representing the JSON string.
-         */
-        private User deserializeUser(String json) {
-            Gson gson = new Gson();
-            return gson.fromJson(json, User.class);
         }
     }
 }

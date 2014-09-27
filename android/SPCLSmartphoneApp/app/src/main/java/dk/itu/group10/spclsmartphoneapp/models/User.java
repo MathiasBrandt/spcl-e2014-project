@@ -1,4 +1,4 @@
-package dk.itu.group10.spclsmartphoneapp;
+package dk.itu.group10.spclsmartphoneapp.models;
 
 import com.google.gson.annotations.SerializedName;
 
