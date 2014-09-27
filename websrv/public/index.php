@@ -21,6 +21,7 @@ $app->get('/users', 'listUsers');
 $app->get('/users/:id', 'getUser');
 $app->put('/users/:id', 'updateUser');
 $app->put('/users/:id/status', 'updateStatus');
+$app->post('/users', 'createUser');
 
 $app->get('/groups', 'listGroups');
 $app->get('/groups/:id', 'getGroup');

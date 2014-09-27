@@ -28,3 +28,13 @@ function updateStatus($id) {
     $user->save();
     echo $user->toJson();
 }
+
+function createUser() {
+    $app = Slim\Slim::getInstance();
+    $json = decodeJsonOrFail($app->request->getBody());
+
+    $user = new User($json);
+    $user->save();
+
+    echo $user->toJson();
+}
