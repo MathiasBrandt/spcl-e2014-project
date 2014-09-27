@@ -39,8 +39,8 @@ import dk.itu.group10.spclsmartphoneapp.models.User;
 
 public class Common {
     private static final String TAG = "Common";
-    public static final String KEY_USER_ID = "USER_ID";
-    public static final int DEFAULT_USER_ID = -1;
+    public static final String PREFERENCES_NAME = "SpclAppPreferences";
+    public static final String PREFERENCES_KEY_USER = "PREFS_KEY_USER";
     public static final String API_CREATE_USER = "http://178.62.255.11/users";
     public static final String API_LIST_USERS = "http://178.62.255.11/users";
 
@@ -77,32 +77,38 @@ public class Common {
     /***
      * Retrieves the user id stored in SharedPreferences.
      * @param a an activity used for context.
-     * @return the stored user id or -1 if no user is exists in SharedPreferences.
+     * @return the stored user or null if no user is exists in SharedPreferences.
      */
-    public static int getUserIdFromPreferences(Activity a) {
-        SharedPreferences preferences = a.getPreferences(a.MODE_PRIVATE);
-        int userId = preferences.getInt(KEY_USER_ID, Common.DEFAULT_USER_ID);
+    public static User getUserFromPreferences(Activity a) {
+        SharedPreferences preferences = a.getSharedPreferences(PREFERENCES_NAME, a.MODE_PRIVATE);
+        String userJson = preferences.getString(PREFERENCES_KEY_USER, null);
+        User user = Common.deserializeUser(userJson);
 
-        if(userId != Common.DEFAULT_USER_ID) {
-            Log.d(TAG, String.format("User id found in preferences: %d", userId));
+        if(user != null) {
+            Log.d(TAG, String.format("User found in preferences: %s", userJson));
         } else {
-            Log.d(TAG, String.format("No user id found in preferences (%d)", userId));
+            Log.d(TAG, String.format("No user found in preferences"));
         }
 
-        return userId;
+        return user;
     }
 
     /***
      * Saves a user id to SharedPreferences.
      * @param a an activity used for context.
-     * @param userId the user id to save.
+     * @param user the user to save.
      */
-    public static void saveUserIdToPreferences(Activity a, int userId) {
-        SharedPreferences preferences = a.getPreferences(a.MODE_PRIVATE);
+    public static void saveUserToPreferences(Activity a, User user) {
+        SharedPreferences preferences = a.getSharedPreferences(PREFERENCES_NAME, a.MODE_PRIVATE);
+        String userJson = Common.serializeUser(user);
 
-        Log.d(TAG, String.format("Saving new user id to preferences: %d", userId));
+        Log.d(TAG, String.format("Saving new user to preferences: %s", userJson));
 
-        preferences.edit().putInt(KEY_USER_ID, userId).apply();
+        preferences.edit().putString(PREFERENCES_KEY_USER, userJson).apply();
+    }
+
+    public static void removeUserInPreferences(Activity a) {
+        saveUserToPreferences(a, null);
     }
 
     /***
@@ -183,7 +189,7 @@ public class Common {
     }
 
     public static void createUser(Activity context, String name, String phone, String email) {
-        new CreateUserAsyncTask(context, name, phone, email);
+        new CreateUserAsyncTask(context, name, phone, email).execute();
     }
 
     public static void getUsers(Activity context, IOnCompleteListener onCompleteListener) {
@@ -193,8 +199,8 @@ public class Common {
     /***
      * Navigates the user interface to MainActivity.
      */
-    public static void navigateToMainActivity(Activity from) {
-        Intent i = new Intent(from, MainActivity.class);
+    public static void navigateToActivity(Activity from, Class<?> to) {
+        Intent i = new Intent(from, to);
         from.startActivity(i);
     }
 
@@ -202,7 +208,7 @@ public class Common {
      * This class represents an async task that can be used to create a user
      * on the server.
      */
-    static class CreateUserAsyncTask extends AsyncTask<Void, Void, Integer> {
+    static class CreateUserAsyncTask extends AsyncTask<Void, Void, User> {
         private static final String NAME_KEY = "Name";
         private static final String PHONE_KEY = "Phone";
         private static final String EMAIL_KEY = "Email";
@@ -222,7 +228,7 @@ public class Common {
         }
 
         @Override
-        protected Integer doInBackground(Void... voids) {
+        protected User doInBackground(Void... voids) {
             // TODO: validate input fields
 
             return postUser();
@@ -232,7 +238,7 @@ public class Common {
          * Tries to create a user on the server by sending a POST request.
          * @return the id of the newly created user or -1 on failure.
          */
-        private int postUser() {
+        private User postUser() {
             User user = new User(name, phone, email, "1");
             String userJson = Common.serializeUser(user);
 
@@ -241,11 +247,11 @@ public class Common {
             if(response != null && response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 String responseString = Common.parseHttpResponse(response);
                 user = Common.deserializeUser(responseString);
-                return user.getId();
+                return user;
             }
 
             Log.d(TAG, "Could not create user");
-            return Common.DEFAULT_USER_ID;
+            return null;
         }
 
         @Override
@@ -259,21 +265,21 @@ public class Common {
         }
 
         @Override
-        protected void onPostExecute(Integer userId) {
-            super.onPostExecute(userId);
+        protected void onPostExecute(User user) {
+            super.onPostExecute(user);
 
-            // save user id to preferences
-            Common.saveUserIdToPreferences(context, userId);
+            // save user to preferences
+            Common.saveUserToPreferences(context, user);
 
             // dismiss the loading dialog
             loadingDialog.dismiss();
 
-            if(userId != Common.DEFAULT_USER_ID) {
+            if(user != null) {
                 // show success message
                 Toast.makeText(context, context.getString(R.string.create_user_success_message), Toast.LENGTH_SHORT).show();
 
                 // navigate to main activity
-                navigateToMainActivity(context);
+                navigateToActivity(context, MainActivity.class);
             } else {
                 // create an alert dialog showing an error message
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);

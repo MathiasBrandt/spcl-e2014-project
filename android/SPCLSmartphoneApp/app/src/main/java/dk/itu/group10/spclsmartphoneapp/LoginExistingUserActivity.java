@@ -2,7 +2,6 @@ package dk.itu.group10.spclsmartphoneapp;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,8 +28,9 @@ public class LoginExistingUserActivity extends Activity {
         lstExistingUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                User u = (User) parent.getItemAtPosition(position);
-                Log.d(TAG, u.toString());
+                User user = (User) parent.getItemAtPosition(position);
+                Common.saveUserToPreferences(LoginExistingUserActivity.this, user);
+                Common.navigateToActivity(LoginExistingUserActivity.this, MainActivity.class);
             }
         });
 

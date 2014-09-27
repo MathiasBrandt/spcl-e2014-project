@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import dk.itu.group10.spclsmartphoneapp.common.Common;
+import dk.itu.group10.spclsmartphoneapp.models.User;
 
 
 public class CreateUserActivity extends Activity {
@@ -22,14 +23,14 @@ public class CreateUserActivity extends Activity {
         setContentView(R.layout.activity_create_user);
 
         // TODO: DEBUGGING REMOVE THIS
-        Common.saveUserIdToPreferences(this, Common.DEFAULT_USER_ID);
+        //Common.saveUserToPreferences(this, Common.DEFAULT_USER_ID);
 
-        // check preferences for user id
-        int userId = Common.getUserIdFromPreferences(this);
+        // check preferences for user
+        User user = Common.getUserFromPreferences(this);
 
         // if a user id was found, navigate to main activity
-        if(userId != Common.DEFAULT_USER_ID) {
-            Common.navigateToMainActivity(this);
+        if(user != null) {
+            Common.navigateToActivity(this, MainActivity.class);
         }
 
         txtName = (EditText) findViewById(R.id.txtName);
