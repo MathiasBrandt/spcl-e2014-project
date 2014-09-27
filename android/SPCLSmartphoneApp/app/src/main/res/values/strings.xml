@@ -14,5 +14,10 @@
     <string name="btnCreateUser">Create User</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="create_user">Please create a user to proceed</string>
+    <string name="create_user_loading_title">Creating User</string>
+    <string name="create_user_loading_message">Please wait ...</string>
+    <string name="create_user_error_title">Error</string>
+    <string name="create_user_error_message">There was an error when attempting to create a user on the server. Please try again.</string>
+    <string name="create_user_success_message">User was successfully created</string>
 
 </resources>
