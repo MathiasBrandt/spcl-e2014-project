@@ -254,7 +254,7 @@ public class Common {
 
             // show loading dialog
             loadingDialog.setTitle(R.string.create_user_loading_title);
-            loadingDialog.setMessage(context.getString(R.string.create_user_loading_message));
+            loadingDialog.setMessage(context.getString(R.string.please_wait_message));
             loadingDialog.show();
         }
 
@@ -319,8 +319,8 @@ public class Common {
             super.onPreExecute();
 
             // show loading dialog
-            loadingDialog.setTitle(R.string.create_user_loading_title);
-            loadingDialog.setMessage(context.getString(R.string.create_user_loading_message));
+            loadingDialog.setTitle(R.string.loading_existing_users_title);
+            loadingDialog.setMessage(context.getString(R.string.please_wait_message));
             loadingDialog.show();
         }
 

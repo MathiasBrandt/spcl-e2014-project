@@ -17,10 +17,12 @@
     <string name="create_user">Please create a user to proceed</string>
     <string name="select_user">Please select an existing user to proceed</string>
     <string name="create_user_loading_title">Creating User</string>
-    <string name="create_user_loading_message">Please wait ...</string>
+    <string name="please_wait_message">Please wait ...</string>
     <string name="create_user_error_title">Error</string>
     <string name="create_user_error_message">There was an error when attempting to create a user on the server. Please try again.</string>
     <string name="create_user_success_message">User was successfully created</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login_existing_user">LoginExistingUserActivity</string>
+    <string name="loading_existing_users_title">Downloading Users</string>
 
 </resources>

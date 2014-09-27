@@ -1,17 +1,16 @@
 package dk.itu.group10.spclsmartphoneapp;
 
 import android.app.Activity;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import dk.itu.group10.spclsmartphoneapp.common.Common;
 
 
-public class LoginActivity extends Activity implements LoginAsExistingUserFragment.OnFragmentInteractionListener {
-    private static final String TAG = "LoginActivity";
+public class CreateUserActivity extends Activity {
+    private static final String TAG = "CreateUserActivity";
 
     private EditText txtName;
     private EditText txtPhone;
@@ -20,7 +19,7 @@ public class LoginActivity extends Activity implements LoginAsExistingUserFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_create_user);
 
         // TODO: DEBUGGING REMOVE THIS
         Common.saveUserIdToPreferences(this, Common.DEFAULT_USER_ID);
@@ -36,33 +35,6 @@ public class LoginActivity extends Activity implements LoginAsExistingUserFragme
         txtName = (EditText) findViewById(R.id.txtName);
         txtPhone = (EditText) findViewById(R.id.txtPhone);
         txtEmail = (EditText) findViewById(R.id.txtEmail);
-    }
-
-    private void loginAsExistingUser() {
-        // build UI
-        // get users
-        // show users in UI
-        // on selection, navigate to MainActivity
-    }
-
-    private void getUsers() {
-        IOnCompleteListener onCompleteListener = new IOnCompleteListener() {
-            @Override
-            public void onComplete(String jsonData) {
-                // hide create user layout
-                RelativeLayout createUserLayout = (RelativeLayout) findViewById(R.id.createUserLayoutContainer);
-                createUserLayout.setVisibility(View.INVISIBLE);
-
-                // show existing user layout
-                RelativeLayout existingUserLayout = (RelativeLayout) findViewById(R.id.existingUserLayoutContainer);
-                existingUserLayout.setVisibility(View.VISIBLE);
-
-                LoginAsExistingUserFragment fragment = LoginAsExistingUserFragment.newInstance(jsonData);
-                getFragmentManager().beginTransaction().add(R.id.existingUserLayoutContainer, fragment, "").commit();
-            }
-        };
-
-        Common.getUsers(this, onCompleteListener);
     }
 
     /***
@@ -83,12 +55,9 @@ public class LoginActivity extends Activity implements LoginAsExistingUserFragme
      * @param v
      */
     public void btnLoginExistingUserOnClick(View v) {
-        getUsers();
+        Intent i = new Intent(CreateUserActivity.this, LoginExistingUserActivity.class);
+        startActivity(i);
     }
 
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }
