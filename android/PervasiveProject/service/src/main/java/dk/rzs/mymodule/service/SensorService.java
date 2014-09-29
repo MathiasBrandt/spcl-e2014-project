@@ -72,6 +72,12 @@ public class SensorService extends IntentService {
         Log.i(TAG, "Count: " + count);
         if (count >= 2) {
 
+
+            //Notifications notifications = new Notifications(this, )
+            long[] vibrations = new long[]{0, 1000, 3};
+            int repeat = 3;
+
+
             Resources r = this.getResources();
             //Pending intent not used yet
             //PendingIntent pi = PendingIntent
@@ -83,6 +89,8 @@ public class SensorService extends IntentService {
                     .setContentText(r.getString(R.string.accelerometer_notification_text))
                             //.setContentIntent(pi)
                     .setAutoCancel(true)
+                    .setUsesChronometer(true)
+                    .setVibrate(vibrations)
                     .build();
             NotificationManager notificationManager = (NotificationManager)
                     this.getSystemService(NOTIFICATION_SERVICE);
