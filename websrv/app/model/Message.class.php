@@ -16,4 +16,8 @@ class Message extends Model {
     public function urgency() {
         return $this->belongsTo('Urgency');
     }
+
+    public function sender() {
+        return $this->belongsTo('User', 'from_user_id');
+    }
 }

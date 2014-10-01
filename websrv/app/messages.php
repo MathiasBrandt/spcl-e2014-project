@@ -1,7 +1,7 @@
 <?php
 function listMessagesForUser($id) {
     $user = User::findOrFail($id);
-    $messages = $user->unreadMessages()->get();
+    $messages = $user->unreadMessages()->with('sender')->get();
     foreach($messages as $message) {
         $message->is_sent = true;
         $message->save();
@@ -10,7 +10,12 @@ function listMessagesForUser($id) {
 }
 
 function listMessagesForGroup($id) {
-    $messages = Group::findOrFail($id)->messages;
+    $group = Group::findOrFail($id);
+    $messages = $group->unreadMessages()->with('sender')->get();
+    foreach($messages as $message) {
+        $message->is_sent = true;
+        $message->save();
+    }
     echo $messages->toJson();
 }
 

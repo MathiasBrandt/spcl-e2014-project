@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.38)
 # Database: spcl
-# Generation Time: 2014-09-21 10:53:18 +0000
+# Generation Time: 2014-10-01 15:00:38 +0000
 # ************************************************************
 
 
@@ -30,27 +30,10 @@ CREATE TABLE `group_user` (
   `group_id` int(11) NOT NULL,
   KEY `user_id` (`user_id`),
   KEY `group_id` (`group_id`),
-  CONSTRAINT `group_user_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `group_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  CONSTRAINT `group_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `group_user_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `group_user` WRITE;
-/*!40000 ALTER TABLE `group_user` DISABLE KEYS */;
-
-INSERT INTO `group_user` (`user_id`, `group_id`)
-VALUES
-	(1,1);
-
-INSERT INTO `group_user` (`user_id`, `group_id`)
-VALUES
-  (2,1);
-
-INSERT INTO `group_user` (`user_id`, `group_id`)
-VALUES
-  (3,1);
-
-/*!40000 ALTER TABLE `group_user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table groups
@@ -64,15 +47,6 @@ CREATE TABLE `groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `groups` WRITE;
-/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
-
-INSERT INTO `groups` (`id`, `name`)
-VALUES
-	(1,'Students');
-
-/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table messages
@@ -82,16 +56,19 @@ DROP TABLE IF EXISTS `messages`;
 
 CREATE TABLE `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from` varchar(255) NOT NULL DEFAULT '',
+  `from` varchar(255) DEFAULT '',
+  `from_user_id` int(11) NOT NULL,
   `to_user_id` int(11) DEFAULT NULL,
   `to_group_id` int(11) DEFAULT NULL,
   `urgency_id` int(11) NOT NULL,
-  `message` varchar(255) NOT NULL DEFAULT '',
+  `message` varchar(255) DEFAULT '',
   `is_sent` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `to_user_id` (`to_user_id`),
   KEY `to_group_id` (`to_group_id`),
   KEY `urgency_id` (`urgency_id`),
+  KEY `from_user_id` (`from_user_id`),
+  CONSTRAINT `messages_ibfk_4` FOREIGN KEY (`from_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`to_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`to_group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE,
   CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`urgency_id`) REFERENCES `urgencies` (`id`) ON DELETE CASCADE
@@ -110,17 +87,6 @@ CREATE TABLE `statuses` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `statuses` WRITE;
-/*!40000 ALTER TABLE `statuses` DISABLE KEYS */;
-
-INSERT INTO `statuses` (`id`, `description`)
-VALUES
-	(1,'Available'),
-	(2,'Busy'),
-	(3,'Very busy');
-
-/*!40000 ALTER TABLE `statuses` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table urgencies
@@ -152,23 +118,6 @@ CREATE TABLE `users` (
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-
-INSERT INTO `users` (`id`, `name`, `status_id`, `phone`, `email`)
-VALUES
-	(1,'Per Mortensen',1,'99999999','example@example.dk');
-
-INSERT INTO `users` (`id`, `name`, `status_id`, `phone`, `email`)
-VALUES
-  (2,'Rasmus Nørgaard',1,'12345678','example@example.dk');
-
-INSERT INTO `users` (`id`, `name`, `status_id`, `phone`, `email`)
-VALUES
-  (3,'Mathias Brandt',1,'87654321','example@example.dk');
-
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 

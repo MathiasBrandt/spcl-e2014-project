@@ -7,4 +7,12 @@ class Group extends Model {
     public function users() {
         return $this->belongsToMany('User');
     }
+
+    public function unreadMessages() {
+        return $this->messages()->where('is_sent', false);
+    }
+
+    public function messages() {
+        return $this->hasMany('Message', 'to_group_id');
+    }
 }

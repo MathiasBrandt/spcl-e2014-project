@@ -20,4 +20,8 @@ class User extends Model {
     public function unreadMessages() {
         return $this->messages()->where('is_sent', false);
     }
+
+    public function sentMessages() {
+        return $this->hasMany('Message', 'from_user_id');
+    }
 }
