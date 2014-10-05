@@ -22,6 +22,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -148,7 +149,7 @@ public class Common {
         HttpResponse response = null;
 
         try {
-            params = new StringEntity(json);
+            params = new StringEntity(json, HTTP.UTF_8);
         } catch (UnsupportedEncodingException e) {
             Log.d(TAG, "UnsupportedEncodingException: could not create StringEntity from json!" + e.getMessage());
         }
