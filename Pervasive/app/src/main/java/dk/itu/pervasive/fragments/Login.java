@@ -12,6 +12,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import dk.itu.pervasive.R;
 import dk.itu.pervasive.interfaces.FragmentCallback;
 import dk.itu.pervasive.models.User;
@@ -94,6 +97,7 @@ public class Login extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_login, container, false);
         setupUiFields(view);
+        checkGooglePlayServices(view);
         return view;
     }
 
@@ -116,7 +120,7 @@ public class Login extends Fragment {
                 // check preferences for user
                 User user = Common.getUserFromPreferences(getActivity());
 
-                // if a user id was found, navigate to main activity
+                // if a user id was found
                 if (user != null) {
                     Common.startService(getActivity());
 
@@ -168,6 +172,16 @@ public class Login extends Fragment {
 
 
 
+    }
+
+    private void checkGooglePlayServices(View view) {
+        int result = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+
+        if(result != ConnectionResult.SUCCESS) {
+            loginButton = (Button) view.findViewById(R.id.login_button);
+            loginButton.setEnabled(false);
+            GooglePlayServicesUtil.getErrorDialog(result, getActivity(), 0).show();
+        }
     }
 
     private boolean isEmpty(EditText editText) {
