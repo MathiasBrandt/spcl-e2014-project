@@ -12,4 +12,7 @@ public interface FragmentCallback {
     public void callToRemoveFragment();
 
     public void closeActivity();
+
+    public void createToast(String message);
+
 }

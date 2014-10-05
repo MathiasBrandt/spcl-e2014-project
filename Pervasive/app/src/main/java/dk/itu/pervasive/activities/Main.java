@@ -1,19 +1,17 @@
 package dk.itu.pervasive.activities;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.ComponentName;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import dk.itu.pervasive.R;
 import dk.itu.pervasive.abstractClasses.SingleFragmentActivity;
 import dk.itu.pervasive.fragments.Login;
 import dk.itu.pervasive.interfaces.FragmentCallback;
-import dk.itu.pervasive.services.MainService;
 
-public class Main extends SingleFragmentActivity implements FragmentCallback{
+public class Main extends SingleFragmentActivity implements FragmentCallback {
 
 
     @Override
@@ -68,4 +66,10 @@ public class Main extends SingleFragmentActivity implements FragmentCallback{
     public void closeActivity() {
         finish();
     }
+
+    @Override
+    public void createToast(String message) {
+        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+    }
+
 }

@@ -1,19 +1,21 @@
 package dk.itu.pervasive.fragments;
 
 
-
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 
 import dk.itu.pervasive.R;
 import dk.itu.pervasive.interfaces.FragmentCallback;
-import dk.itu.pervasive.services.MainService;
+import dk.itu.pervasive.models.User;
+import dk.itu.pervasive.various.Common;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +24,8 @@ import dk.itu.pervasive.services.MainService;
  *
  */
 public class Login extends Fragment {
+    private static final String TAG = "Login";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,11 +40,18 @@ public class Login extends Fragment {
 
     // UI
     Button loginButton;
+    Button createUser;
+    EditText inputNameField;
+    EditText inputEmailField;
+    EditText inputPhoneField;
+
+
 
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        Common.setContext(activity);
         fragmentCallback = (FragmentCallback)activity;
     }
 
@@ -93,32 +104,79 @@ public class Login extends Fragment {
 
     private void setupUiFields(View view) {
         loginButton = (Button) view.findViewById(R.id.login_button);
+        createUser = (Button) view.findViewById(R.id.create_user_button);
+        inputNameField = (EditText) view.findViewById(R.id.set_name);
+        inputEmailField = (EditText) view.findViewById(R.id.set_email);
+        inputPhoneField = (EditText) view.findViewById(R.id.set_phone_number);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Check if login information exists
-                // connect to server...
+                // check preferences for user
+                User user = Common.getUserFromPreferences(getActivity());
 
-                // If login exists --> start service --> close fragment
-                if (true) {
-                    Intent serveviceIntent = new Intent(getActivity(), MainService.class);
-                    getActivity().startService(serveviceIntent);
+                // if a user id was found, navigate to main activity
+                if (user != null) {
+                    Common.startService(getActivity());
 
                     // closes activity --> service keeps running
                     fragmentCallback.closeActivity();
-                }
+                } else {
 
-                // If login doesn't exist --> show text input fields
-                if (false) {
+                    // If login doesn't exist animate login button out
+                    Animation loginButtonOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.login_button_out);
+                    loginButton.startAnimation(loginButtonOutAnimation);
+                    loginButton.setVisibility(View.INVISIBLE);
 
+                    // animate text input fields onto view.
+                    Animation loginFieldsAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.login_fields_animation);
+                    // set views to visible
+                    inputNameField.setVisibility(View.VISIBLE);
+                    inputEmailField.setVisibility(View.VISIBLE);
+                    inputPhoneField.setVisibility(View.VISIBLE);
+                    createUser.setVisibility(View.VISIBLE);
+
+                    // start animtaion on views (defined in res/anim folder)
+                    inputNameField.startAnimation(loginFieldsAnimation);
+                    inputEmailField.startAnimation(loginFieldsAnimation);
+                    inputPhoneField.startAnimation(loginFieldsAnimation);
+                    createUser.startAnimation(loginFieldsAnimation);
 
                 }
             }
         });
+
+        createUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // fetch variables from text fields check if empty
+                if (isEmpty(inputEmailField) || isEmpty(inputNameField) || isEmpty(inputPhoneField)) {
+                    fragmentCallback.createToast("You must fill out all fields...");
+                } else {
+                    String name = inputNameField.getText().toString().trim();
+                    String phone = inputEmailField.getText().toString().trim();
+                    String email = inputPhoneField.getText().toString().trim().toLowerCase();
+
+                    Common.createUser(getActivity(), name, phone, email);
+
+                    // if user now exists close activity
+
+                }
+            }
+        });
+
+
+
+    }
+
+    private boolean isEmpty(EditText editText) {
+        return editText.getText().toString().trim().length() == 0;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
+
 }

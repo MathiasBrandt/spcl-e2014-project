@@ -3,9 +3,11 @@ package dk.itu.pervasive.services;
 /**
  * Created by rnoe on 30/09/14.
  */
+
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -13,9 +15,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-import dk.itu.pervasive.R;
+import dk.itu.pervasive.models.User;
 import dk.itu.pervasive.sensorListeners.AccelSensorListener;
 import dk.itu.pervasive.sensorListeners.GravitySensorListener;
+import dk.itu.pervasive.various.Common;
 
 /**
  * Created by rnoe on 24/09/14.
@@ -35,14 +38,17 @@ public class MainService extends IntentService {
 
 
 
+
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.i(TAG, "Received an intent: " + intent);
+        User user = Common.getUserFromPreferences();
+        createNotification("Hi " + user.getName() + "\nInterrupt service is now running... ", "Pervasive Project", "Turn over phone to set busy state", null, false );
+
 
         // Start GRAVITY SENSOR
         if (mGravitySensorListener == null) {
             startGravitySensor();
-
         }
     }
 
@@ -59,6 +65,7 @@ public class MainService extends IntentService {
     }
 
     public void disableGravitySensor(){
+        createNotification("You are now set as BUSY!", "Pervasive Project", "DO NOT DISTURB", null, true);
         mSensorManager.unregisterListener(mGravitySensorListener);
         startAccelSensor();
     }
@@ -80,32 +87,29 @@ public class MainService extends IntentService {
     public void handleShakeEvent(int count) {
         Log.i(TAG, "Count: " + count);
         if (count >= 2) {
-
-
-            //Notifications notifications = new Notifications(this, )
-            long[] vibrations = new long[]{0, 1000, 3};
-            int repeat = 3;
-
-
-            Resources r = this.getResources();
-            //Pending intent not used yet
-            //PendingIntent pi = PendingIntent
-            //        .getActivity(this, 0, new Intent(this, PhotoGalleryActivity.class), 0);
-            Notification notification = new Notification.Builder(this)
-                    .setTicker(r.getString(R.string.accelerometer_notification))
-                    .setSmallIcon(android.R.drawable.ic_menu_report_image)
-                    .setContentTitle(r.getString(R.string.accelerometer_notification_title))
-                    .setContentText(r.getString(R.string.accelerometer_notification_text))
-                            //.setContentIntent(pi)
-                    .setAutoCancel(true)
-                    .setUsesChronometer(true)
-                    .setVibrate(vibrations)
-                    .build();
-            NotificationManager notificationManager = (NotificationManager)
-                    this.getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.notify(0, notification);
+            createNotification("You are now set as available", "Pervasive Project", "AVAILABLE", null, false);
 
             mSensorManager.unregisterListener(mAccelSensorListener);
         }
+    }
+
+    private void createNotification(String ticker, String title, String text, PendingIntent i, boolean timer) {
+        long[] vibrations = new long[]{0, 1000};
+        Resources r = this.getResources();
+
+        Notification notification = new Notification.Builder(this)
+                .setTicker(ticker)
+                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setContentIntent(i)
+                .setAutoCancel(true)
+                .setUsesChronometer(timer)
+                .setVibrate(vibrations)
+                //.setOngoing(false)
+                .build();
+        NotificationManager notificationManager = (NotificationManager)
+                this.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify("pervasive", 0, notification);
     }
 }
