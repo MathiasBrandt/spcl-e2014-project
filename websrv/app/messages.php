@@ -1,12 +1,29 @@
 <?php
+
+/**
+ * Lists all unread messages for the user and its groups, marking the messages read in the process.
+ * @param $id The user id
+ */
 function listMessagesForUser($id) {
-    $user = User::findOrFail($id);
-    $messages = $user->unreadMessages()->with('sender')->get();
-    foreach($messages as $message) {
+    $user = User::with('messages.sender', 'groups.messages.sender')->findOrFail($id);
+    $userMessages = $user->unreadMessages()->with('sender')->get();
+    foreach($userMessages as $message) {
         $message->is_sent = true;
         $message->save();
     }
-    echo $messages->toJson();
+
+    $groups = $user->groups;
+    $groupMessages = array();
+    foreach($groups as $group) {
+        $messages = $group->unreadMessages()->with('sender', 'group')->get();
+        foreach($messages as $message) {
+            $message->is_sent = true;
+            $message->save();
+        }
+        $groupMessages = array_merge($groupMessages, $messages->toArray());
+    }
+
+    echo json_encode(array_merge($userMessages->toArray(), $groupMessages));
 }
 
 function listMessagesForGroup($id) {

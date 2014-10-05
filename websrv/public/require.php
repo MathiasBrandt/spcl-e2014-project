@@ -7,6 +7,7 @@ require '../app/model/Urgency.class.php';
 require '../app/model/User.class.php';
 require '../app/common.php';
 require '../app/error.php';
+require '../app/gcm.php';
 require '../app/groups.php';
 require '../app/messages.php';
 require '../app/statuses.php';
