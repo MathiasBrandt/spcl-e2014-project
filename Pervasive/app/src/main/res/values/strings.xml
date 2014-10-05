@@ -6,7 +6,8 @@
     <string name="login_fragment">Login Fragment</string>
     <string name="message_fragment">Message Fragment</string>
     <string name="submit_message">Submit your message</string>
-    <string name="login">Login...</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
     <string name="set_name">Name</string>
     <string name="set_email">Email</string>
     <string name="set_phone_number">Phone number</string>

@@ -9,13 +9,13 @@
     <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:text="@string/login"/>
 
     <EditText
         android:id="@+id/set_name"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:hint="@string/set_name"
         android:visibility="invisible"
 
@@ -23,14 +23,14 @@
     <EditText
         android:id="@+id/set_email"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:hint="@string/set_email"
         android:visibility="invisible"
         />
     <EditText
         android:id="@+id/set_phone_number"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:hint="@string/set_phone_number"
         android:visibility="invisible"
         />
@@ -38,10 +38,17 @@
     <Button
         android:id="@+id/create_user_button"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:text="@string/create_user"
         android:visibility="invisible"
         />
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        android:layout_marginTop="100dp"/>
 
 
 

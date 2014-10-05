@@ -44,6 +44,7 @@ public class Login extends Fragment {
     // UI
     Button loginButton;
     Button createUser;
+    Button logoutButton;
     EditText inputNameField;
     EditText inputEmailField;
     EditText inputPhoneField;
@@ -97,7 +98,7 @@ public class Login extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_login, container, false);
         setupUiFields(view);
-        checkGooglePlayServices(view);
+        checkGooglePlayServices();
         return view;
     }
 
@@ -109,6 +110,7 @@ public class Login extends Fragment {
     private void setupUiFields(View view) {
         loginButton = (Button) view.findViewById(R.id.login_button);
         createUser = (Button) view.findViewById(R.id.create_user_button);
+        logoutButton = (Button) view.findViewById(R.id.logout_button);
         inputNameField = (EditText) view.findViewById(R.id.set_name);
         inputEmailField = (EditText) view.findViewById(R.id.set_email);
         inputPhoneField = (EditText) view.findViewById(R.id.set_phone_number);
@@ -170,15 +172,18 @@ public class Login extends Fragment {
             }
         });
 
-
-
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Common.removeUserInPreferences(getActivity());
+            }
+        });
     }
 
-    private void checkGooglePlayServices(View view) {
+    private void checkGooglePlayServices() {
         int result = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
 
         if(result != ConnectionResult.SUCCESS) {
-            loginButton = (Button) view.findViewById(R.id.login_button);
             loginButton.setEnabled(false);
             GooglePlayServicesUtil.getErrorDialog(result, getActivity(), 0).show();
         }
