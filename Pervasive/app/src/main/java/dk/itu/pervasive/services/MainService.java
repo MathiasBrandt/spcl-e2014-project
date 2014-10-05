@@ -11,10 +11,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import dk.itu.pervasive.R;
 import dk.itu.pervasive.models.User;
 import dk.itu.pervasive.sensorListeners.AccelSensorListener;
 import dk.itu.pervasive.sensorListeners.GravitySensorListener;
@@ -43,13 +46,16 @@ public class MainService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.i(TAG, "Received an intent: " + intent);
         User user = Common.getUserFromPreferences();
-        createNotification("Hi " + user.getName() + "\nInterrupt service is now running... ", "Pervasive Project", "Turn over phone to set busy state", null, false );
+        createNotification("Hi " + user.getName() + "\nInterrupt service is now running... ", "Pervasive Project", "Turn over phone to set busy state", null, false, R.drawable.available );
 
 
         // Start GRAVITY SENSOR
         if (mGravitySensorListener == null) {
             startGravitySensor();
         }
+
+        // if bundle
+            // create switch case for bundle id setting which action to start
     }
 
     private void startGravitySensor() {
@@ -65,7 +71,7 @@ public class MainService extends IntentService {
     }
 
     public void disableGravitySensor(){
-        createNotification("You are now set as BUSY!", "Pervasive Project", "DO NOT DISTURB", null, true);
+        createNotification("You are now set as BUSY!", "Pervasive Project", "DO NOT DISTURB", null, false, R.drawable.do_not_disturb);
         mSensorManager.unregisterListener(mGravitySensorListener);
         startAccelSensor();
     }
@@ -87,17 +93,21 @@ public class MainService extends IntentService {
     public void handleShakeEvent(int count) {
         Log.i(TAG, "Count: " + count);
         if (count >= 2) {
-            createNotification("You are now set as available", "Pervasive Project", "AVAILABLE", null, false);
+            createNotification("You are now set as available", "Pervasive Project", "AVAILABLE", null, false, R.drawable.available);
 
             mSensorManager.unregisterListener(mAccelSensorListener);
         }
     }
 
-    private void createNotification(String ticker, String title, String text, PendingIntent i, boolean timer) {
+    private void createNotification(String ticker, String title, String text, PendingIntent i, boolean timer, int icon) {
         long[] vibrations = new long[]{0, 1000};
         Resources r = this.getResources();
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), icon);
+
 
         Notification notification = new Notification.Builder(this)
+                .setLargeIcon(largeIcon)
+                .setSmallIcon(android.R.drawable.ic_notification_clear_all)
                 .setTicker(ticker)
                 .setSmallIcon(android.R.drawable.ic_menu_report_image)
                 .setContentTitle(title)
@@ -106,10 +116,16 @@ public class MainService extends IntentService {
                 .setAutoCancel(true)
                 .setUsesChronometer(timer)
                 .setVibrate(vibrations)
-                //.setOngoing(false)
+                .addAction(android.R.drawable.ic_delete, "Close service", null)
                 .build();
         NotificationManager notificationManager = (NotificationManager)
                 this.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify("pervasive", 0, notification);
+        notificationManager.notify(0, notification);
+    }
+
+    private void closeNotification(int notificationId) {
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(notificationId);
+
     }
 }

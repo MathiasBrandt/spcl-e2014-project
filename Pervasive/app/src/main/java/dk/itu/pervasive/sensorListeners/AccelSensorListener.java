@@ -22,7 +22,7 @@ public class AccelSensorListener implements SensorEventListener {
      *  many G's it takes to register a shake
      */
     private static final String TAG = "AccelSensorListener";
-    private static final float SHAKE_THRESHOLD_GRAVITY = 2.0F;
+    private static final float SHAKE_THRESHOLD_GRAVITY = 2.2F;
     private static final int SHAKE_SLOP_TIME_MS = 300;
     private static final int SHAKE_COUNT_RESET_TIME_MS = 1000;
 
