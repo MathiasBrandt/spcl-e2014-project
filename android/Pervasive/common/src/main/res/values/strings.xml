@@ -44,4 +44,6 @@
     <string name="profile_phone">Phone:</string>
     <string name="title_activity_message">Message</string>
     <string name="hello_world">Hello world!</string>
+    <string name="state_busy">BUSY</string>
+    <string name="state_available">AVAILABLE</string>
 </resources>

@@ -44,6 +44,9 @@ public class Common {
     public static final String API_LIST_USERS = "http://178.62.255.11/users";
     private static Context context;
 
+    public static final int USER_STATE_AVAILABLE = 1;
+    public static final int USER_STATE_BUSY = 2;
+
     private Common() {}
 
     public static void setContext(Activity activity) {
@@ -98,6 +101,7 @@ public class Common {
         return user;
     }
 
+    @Deprecated
     public static User getUserFromPreferences() {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME, context.MODE_PRIVATE);
         String userJson = preferences.getString(PREFERENCES_KEY_USER, null);
@@ -218,10 +222,19 @@ public class Common {
     /***
      * Navigates the user interface to MainActivity.
      */
+    public static void navigateToActivity(Activity from, Class<?> to) {
+        Intent i = new Intent(from, to);
+        from.startActivity(i);
+    }
+
+    // TODO: find references and refactor -- this should not be used!
+    @Deprecated
     public static void navigateToActivity(Activity from, Class<?> to, Boolean keepInHistory) {
         navigateToActivity(from, to, null, keepInHistory);
     }
 
+    // TODO: find references and refactor -- this should not be used!
+    @Deprecated
     public static void navigateToActivity(Activity from, Class<?> to, Class<?> parent, Boolean keepInHistory) {
         Intent i = new Intent(from, to);
 
