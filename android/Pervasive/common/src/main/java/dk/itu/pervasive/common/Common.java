@@ -46,6 +46,11 @@ public class Common {
 
     public static final int USER_STATE_AVAILABLE = 1;
     public static final int USER_STATE_BUSY = 2;
+    public static final int USER_STATE_VERY_BUSY = 3;
+
+    public static final int URGENCY_LOW = 1;
+    public static final int URGENCY_MEDIUM = 2;
+    public static final int URGENCY_HIGH = 3;
 
     private Common() {}
 
