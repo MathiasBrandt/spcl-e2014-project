@@ -17,8 +17,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import dk.itu.pervasive.R;
 import dk.itu.pervasive.interfaces.FragmentCallback;
-import dk.itu.pervasive.models.User;
-import dk.itu.pervasive.various.Common;
+import dk.itu.pervasive.common.User;
+import dk.itu.pervasive.common.Common;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,7 +124,7 @@ public class Login extends Fragment {
 
                 // if a user id was found
                 if (user != null) {
-                    Common.startService(getActivity());
+                    Common.startMainService(getActivity());
 
                     // closes activity --> service keeps running
                     fragmentCallback.closeActivity();

@@ -1,4 +1,4 @@
-package dk.itu.pervasive.models;
+package dk.itu.pervasive.common;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,8 +1,9 @@
-package dk.itu.pervasive.sensorListeners;
+package dk.itu.pervasive.common.sensorListeners;
 
 /**
  * Created by rnoe on 30/09/14.
  */
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.res.Resources;
@@ -11,8 +12,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.util.Log;
 
-import dk.itu.pervasive.R;
-import dk.itu.pervasive.services.MainService;
+import dk.itu.pervasive.common.MainService;
+import dk.itu.pervasive.common.R;
 
 /**
  * Created by rnoe on 30/09/14.

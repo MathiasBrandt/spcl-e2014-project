@@ -1,4 +1,4 @@
-package dk.itu.pervasive.sensorListeners;
+package dk.itu.pervasive.common.sensorListeners;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -7,7 +7,7 @@ import android.hardware.SensorManager;
 import android.util.FloatMath;
 import android.util.Log;
 
-import dk.itu.pervasive.services.MainService;
+import dk.itu.pervasive.common.MainService;
 
 /**
  * Created by rnoe on 30/09/14.

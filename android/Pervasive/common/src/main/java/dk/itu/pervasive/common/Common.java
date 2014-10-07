@@ -1,4 +1,4 @@
-package dk.itu.pervasive.various;
+package dk.itu.pervasive.common;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -29,11 +29,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.List;
-
-import dk.itu.pervasive.R;
-import dk.itu.pervasive.interfaces.IOnCompleteListener;
-import dk.itu.pervasive.models.User;
-import dk.itu.pervasive.services.MainService;
 
 
 /**
@@ -318,7 +313,7 @@ public class Common {
                 Toast.makeText(context, context.getString(R.string.create_user_success_message), Toast.LENGTH_SHORT).show();
 
                 // start service
-                startService(context);
+                startMainService(context);
                 context.finish();
 
             } else {
@@ -387,7 +382,7 @@ public class Common {
         }
     }
 
-    public static void startService(Context context) {
+    public static void startMainService(Context context) {
         Intent serviceIntent = new Intent(context, MainService.class);
         context.startService(serviceIntent);
     }

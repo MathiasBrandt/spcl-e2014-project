@@ -10,7 +10,7 @@
         android:icon="@drawable/do_not_disturb"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <service android:name=".services.MainService" />
+        <service android:name=".common.MainService" />
 
         <activity
             android:name=".activities.MainActivity"

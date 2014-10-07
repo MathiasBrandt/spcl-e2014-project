@@ -1,4 +1,4 @@
-package dk.itu.pervasive.interfaces;
+package dk.itu.pervasive.common;
 
 /**
  * Created by brandt on 27/09/14.

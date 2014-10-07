@@ -1,4 +1,4 @@
-package dk.itu.pervasive.services;
+package dk.itu.pervasive.common;
 
 /**
  * Created by rnoe on 30/09/14.
@@ -17,11 +17,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-import dk.itu.pervasive.R;
-import dk.itu.pervasive.models.User;
-import dk.itu.pervasive.sensorListeners.AccelSensorListener;
-import dk.itu.pervasive.sensorListeners.GravitySensorListener;
-import dk.itu.pervasive.various.Common;
+import dk.itu.pervasive.common.sensorListeners.AccelSensorListener;
+import dk.itu.pervasive.common.sensorListeners.GravitySensorListener;
+
 
 /**
  * Created by rnoe on 24/09/14.
