@@ -7,13 +7,15 @@
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
     tools:context="dk.itu.pervasive.tablet.activities.MainActivity"
-    android:id="@+id/rootLayout">
+    android:id="@+id/rootLayout"
+    android:background="@color/state_color_green">
 
     <RelativeLayout
         android:id="@+id/frameUserState"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:paddingTop="15dp">
+        android:paddingTop="15dp"
+        android:background="@color/state_color_dark_green">
 
         <TextView
             android:id="@+id/txtUserName"
@@ -34,6 +36,21 @@
             android:textColor="@android:color/white"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/txtUserName"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/frameBottomUI"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/state_color_dark_green"
+        android:layout_below="@id/frameUserState"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_marginBottom="?android:attr/actionBarSize"
+        android:layout_marginRight="@dimen/frameBottomUI_horizontal_margin"
+        android:layout_marginLeft="@dimen/frameBottomUI_horizontal_margin">
+
+
+
         </RelativeLayout>
 
 </RelativeLayout>

@@ -23,7 +23,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         userStateFrame = (RelativeLayout) findViewById(R.id.frameUserState);
         userStateText = (TextView) findViewById(R.id.txtUserState);
     }
@@ -51,21 +50,32 @@ public class MainActivity extends Activity {
     private void setUserState(int state) {
         ActionBar actionBar = getActionBar();
         RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
+        RelativeLayout frameBottomUI = (RelativeLayout) findViewById(R.id.frameBottomUI);
 
         switch(state) {
             case Common.USER_STATE_AVAILABLE:
-                userStateFrame.setBackground(new ColorDrawable(getResources().getColor(R.color.state_color_dark_green)));
+                ColorDrawable greenDrawable = new ColorDrawable(getResources().getColor(R.color.state_color_green));
+                ColorDrawable darkGreenDrawable = new ColorDrawable(getResources().getColor(R.color.state_color_dark_green));
+
+                userStateFrame.setBackground(darkGreenDrawable);
                 userStateText.setText(R.string.state_available);
 
-                actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.state_color_green)));
-                rootLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.state_color_green)));
+                actionBar.setBackgroundDrawable(greenDrawable);
+                rootLayout.setBackground(greenDrawable);
+                frameBottomUI.setBackground(darkGreenDrawable);
+
                 break;
             case Common.USER_STATE_BUSY:
-                userStateFrame.setBackground(new ColorDrawable(getResources().getColor(R.color.state_color_dark_red)));
+                ColorDrawable redDrawable = new ColorDrawable(getResources().getColor(R.color.state_color_red));
+                ColorDrawable darkRedDrawable = new ColorDrawable(getResources().getColor(R.color.state_color_dark_red));
+
+                userStateFrame.setBackground(darkRedDrawable);
                 userStateText.setText(R.string.state_busy);
 
-                actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.state_color_red)));
-                rootLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.state_color_red)));
+                actionBar.setBackgroundDrawable(redDrawable);
+                rootLayout.setBackground(redDrawable);
+                frameBottomUI.setBackground(darkRedDrawable);
+                
                 break;
         }
     }
