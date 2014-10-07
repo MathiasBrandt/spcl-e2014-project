@@ -11,7 +11,7 @@ import dk.itu.pervasive.abstractClasses.SingleFragmentActivity;
 import dk.itu.pervasive.fragments.Login;
 import dk.itu.pervasive.interfaces.FragmentCallback;
 
-public class Main extends SingleFragmentActivity implements FragmentCallback {
+public class MainActivity extends SingleFragmentActivity implements FragmentCallback {
 
 
     @Override

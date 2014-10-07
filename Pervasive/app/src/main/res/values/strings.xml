@@ -19,13 +19,11 @@
     <string name="accelerometer_notification_title">I AM AVAILABLE</string>
     <string name="accelerometer_notification_text">Situated display has changed to free</string>
 
-
     <!-- Mathias strings -->
     <string name="title_activity_create_user">Create New User</string>
     <string name="title_activity_main">Pervasive</string>
     <string name="title_activity_login_existing_user">Select Existing User</string>
     <string name="title_activity_profile">Profile</string>
-
     <string name="btnCreateUser">Create User</string>
     <string name="btnLoginExistingUser">Login With Existing User</string>
     <string name="btnSwitchUser">Switch User</string>
@@ -33,22 +31,20 @@
     <string name="btnYes">YES</string>
     <string name="btnNo">NO</string>
     <string name="btnOk">OK</string>
-
     <string name="select_user">Please select an existing user to proceed</string>
     <string name="please_wait_message">Please wait ...</string>
     <string name="create_user_error_message">There was an error when attempting to create a user on the server. Please try again.</string>
     <string name="create_user_success_message">User was successfully created</string>
     <string name="quit_app_message">Are you sure you want to quit?</string>
-
     <string name="create_user_loading_title">Creating User</string>
     <string name="create_user_error_title">Error</string>
     <string name="loading_existing_users_title">Downloading Users</string>
     <string name="quit_app_title">Really Quit?</string>
-
     <string name="action_profile">Profile</string>
-
     <string name="profile_name">Name:</string>
     <string name="profile_email">E-mail:</string>
     <string name="profile_phone">Phone:</string>
+    <string name="title_activity_message">Message</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
