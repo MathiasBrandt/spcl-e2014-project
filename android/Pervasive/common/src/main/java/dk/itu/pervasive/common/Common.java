@@ -190,7 +190,7 @@ public class Common {
             response = client.execute(getRequest);
             Log.d(TAG, "Server returned status code: " + response.getStatusLine().getStatusCode());
         } catch (IOException e) {
-            Log.d(TAG, "IOException");
+            Log.d(TAG, "IOException: " + e.getMessage());
         }
 
         return response;
