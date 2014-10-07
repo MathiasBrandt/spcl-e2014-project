@@ -2,6 +2,7 @@ package dk.itu.pervasive.tablet.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         userStateFrame = (RelativeLayout) findViewById(R.id.frameUserState);
         userStateText = (TextView) findViewById(R.id.txtUserState);
@@ -48,15 +50,22 @@ public class MainActivity extends Activity {
 
     private void setUserState(int state) {
         ActionBar actionBar = getActionBar();
+        RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.rootLayout);
 
         switch(state) {
             case Common.USER_STATE_AVAILABLE:
-                userStateFrame.setBackgroundColor(R.color.state_color_green);
+                userStateFrame.setBackground(new ColorDrawable(getResources().getColor(R.color.state_color_dark_green)));
                 userStateText.setText(R.string.state_available);
+
+                actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.state_color_green)));
+                rootLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.state_color_green)));
                 break;
             case Common.USER_STATE_BUSY:
-                userStateFrame.setBackgroundColor(R.color.state_color_red);
+                userStateFrame.setBackground(new ColorDrawable(getResources().getColor(R.color.state_color_dark_red)));
                 userStateText.setText(R.string.state_busy);
+
+                actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.state_color_red)));
+                rootLayout.setBackground(new ColorDrawable(getResources().getColor(R.color.state_color_red)));
                 break;
         }
     }
