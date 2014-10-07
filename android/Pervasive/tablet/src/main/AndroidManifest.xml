@@ -12,8 +12,7 @@
             android:label="@string/title_activity_select_user" >
         </activity>
         <activity
-            android:name=".activities.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

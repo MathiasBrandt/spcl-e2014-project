@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="label_blank"></string>
     <string name="app_name">Pervasive Tablet</string>
     <string name="title_activity_select_user">Select a User</string>
     <string name="title_activity_main">Do Not Disturb</string>
-    <string name="action_settings">Settings</string>
+    <string name="please_select_user">Please select a user to associate with this display.</string>
+    <string name="placehldr_user_name">USER NAME IS</string>
+    <string name="menu_item_logout">Logout</string>
 </resources>
