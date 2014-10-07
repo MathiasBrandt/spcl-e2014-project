@@ -8,7 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.util.List;
+
 import dk.itu.pervasive.common.Common;
+import dk.itu.pervasive.common.IOnCompleteListener;
 import dk.itu.pervasive.common.User;
 import dk.itu.pervasive.tablet.R;
 
@@ -21,25 +24,28 @@ public class SelectUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_user);
 
-        lstUsers = (ListView) findViewById(R.id.lstUsers);
-        lstUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                User user = (User) parent.getItemAtPosition(position);
-                Common.saveUserToPreferences(SelectUserActivity.this, user);
-                SelectUserActivity.this.finish();
-            }
-        });
-
+        getActionBar().hide();
         populateUserList();
     }
 
     private void populateUserList() {
-        User user1 = new User("Mathias", "12345678", "e@mail.dk", 1);
-        User user2 = new User("Rasmus", "87654321", "mail@e.dk", 2);
-        User[] users = new User[] { user1, user2 };
+        Common.getUsers(this, new IOnCompleteListener() {
+            @Override
+            public void onComplete(String jsonData) {
+                List<User> users = Common.deserializeUsers(jsonData);
+                ListAdapter adapter = new ArrayAdapter<User>(SelectUserActivity.this, android.R.layout.simple_list_item_1, users);
 
-        ListAdapter adapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, users);
-        lstUsers.setAdapter(adapter);
+                lstUsers = (ListView) findViewById(R.id.lstUsers);
+                lstUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        User user = (User) parent.getItemAtPosition(position);
+                        Common.saveUserToPreferences(SelectUserActivity.this, user);
+                        SelectUserActivity.this.finish();
+                    }
+                });
+                lstUsers.setAdapter(adapter);
+            }
+        });
     }
 }
