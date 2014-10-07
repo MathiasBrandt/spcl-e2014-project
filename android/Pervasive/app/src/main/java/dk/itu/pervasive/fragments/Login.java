@@ -132,8 +132,11 @@ public class Login extends Fragment {
 
                     // If login doesn't exist animate login button out
                     Animation loginButtonOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.login_button_out);
+                    Animation logoutButtonOutAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.logout_button_out);
                     loginButton.startAnimation(loginButtonOutAnimation);
                     loginButton.setVisibility(View.INVISIBLE);
+                    logoutButton.startAnimation(logoutButtonOutAnimation);
+                    logoutButton.setVisibility(View.INVISIBLE);
 
                     // animate text input fields onto view.
                     Animation loginFieldsAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.login_fields_animation);
