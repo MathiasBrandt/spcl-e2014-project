@@ -1,23 +1,49 @@
 package dk.itu.pervasive.tablet.activities;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import dk.itu.pervasive.common.Common;
+import dk.itu.pervasive.common.User;
 import dk.itu.pervasive.tablet.R;
 
 public class MainActivity extends Activity {
+    RelativeLayout userStateFrame;
+    TextView userStateText;
+
+    private Boolean derp = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Boolean isLoggedIn = false;
+        userStateFrame = (RelativeLayout) findViewById(R.id.frameUserState);
+        userStateText = (TextView) findViewById(R.id.txtUserState);
 
-        if(!isLoggedIn) {
+        User user = Common.getUserFromPreferences(this);
+
+        if(user == null) {
             // navigate to SelectUserActivity
+            Common.navigateToActivity(this, SelectUserActivity.class);
+        }
+    }
 
+    private void setState(int state) {
+        switch(state) {
+            case Common.USER_STATE_AVAILABLE:
+                userStateFrame.setBackgroundColor(Color.GREEN);
+                userStateText.setText(R.string.state_available);
+                break;
+            case Common.USER_STATE_BUSY:
+                userStateFrame.setBackgroundColor(Color.RED);
+                userStateText.setText(R.string.state_busy);
+                break;
         }
     }
 
