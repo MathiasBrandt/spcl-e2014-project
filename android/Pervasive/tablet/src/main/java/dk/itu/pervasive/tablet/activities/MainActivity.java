@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
                 actionBar.setBackgroundDrawable(redDrawable);
                 rootLayout.setBackground(redDrawable);
                 frameBottomUI.setBackground(darkRedDrawable);
-                
+
                 break;
         }
     }
