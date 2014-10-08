@@ -45,6 +45,8 @@ function sendMessageToUser($id) {
     $message->user()->associate($user);
     $message->save();
     echo $message->toJson();
+
+    sendSyncMessage($user->id, false);
 }
 
 function sendMessageToGroup($id) {

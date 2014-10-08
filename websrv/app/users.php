@@ -28,19 +28,7 @@ function updateStatus($id) {
     $user->save();
     echo $user->toJson();
 
-    // prepare message for tablets
-    // recipients: the user's own tablet and the tablet of every user in the user's groups
-    $recipientIds = array($user->gcm_id);
-    $groups = $user->groups()->with('users')->get();
-    foreach($groups as $group) {
-        foreach($group->users as $groupUser) {
-            // add user's gcm registration id to recipients
-            if($groupUser->gcm_id)
-                array_push($recipientIds, $groupUser->gcm_id);
-        }
-    }
-
-    sendGoogleCloudMessage($user->toArray(), array_unique($recipientIds));
+    sendSyncMessage($user->id, true);
 }
 
 function createUser() {
