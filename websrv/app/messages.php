@@ -6,20 +6,20 @@
  */
 function listMessagesForUser($id) {
     $user = User::with('messages.sender', 'groups.messages.sender')->findOrFail($id);
-    $userMessages = $user->unreadMessages()->with('sender')->get();
-    foreach($userMessages as $message) {
+    $userMessages = $user->unreadMessages()->with('sender', 'urgency')->get();
+    /*foreach($userMessages as $message) {
         $message->is_sent = true;
         $message->save();
-    }
+    }*/
 
     $groups = $user->groups;
     $groupMessages = array();
     foreach($groups as $group) {
-        $messages = $group->unreadMessages()->with('sender', 'group')->get();
-        foreach($messages as $message) {
+        $messages = $group->unreadMessages()->with('sender', 'group', 'urgency')->get();
+        /*foreach($messages as $message) {
             $message->is_sent = true;
             $message->save();
-        }
+        }*/
         $groupMessages = array_merge($groupMessages, $messages->toArray());
     }
 
