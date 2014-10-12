@@ -1,4 +1,4 @@
-angular.module('spcl').controller('tabletCtrl', ['$scope', '$interval', '$http', function($scope, $interval, $http) {
+angular.module('spcl').controller('tabletCtrl', ['$scope', '$interval', '$http', '$timeout', function($scope, $interval, $http, $timeout) {
     $scope.refreshMessages = function() {
         $http.get('/users/' + $scope.userId + '/messages')
             .success(function(data) {
@@ -14,12 +14,24 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$interval', '$http',
             });
     };
 
+    $scope.connect = function() {
+        $scope.socket = io.connect('http://localhost:3000');
+        $scope.socket.on('statusChanged', function(data) {
+            console.log('statusChanged: ' + data);
+
+            $scope.$apply(function() {
+                $scope.user = angular.fromJson(data);
+            });
+        });
+    };
+
     $scope.userId = 1;
     $scope.user = {};
     $scope.messages = [];
 
+    $scope.connect();
     $scope.refreshUser();
-    $interval(function() {
+    /*$interval(function() {
         $scope.refreshMessages();
-    }, 2000);
+    }, 2000);*/
 }]);

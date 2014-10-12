@@ -1,5 +1,6 @@
 app/db.json
 app/gcm.json
+node_modules/
 
 # Created by https://www.gitignore.io
 

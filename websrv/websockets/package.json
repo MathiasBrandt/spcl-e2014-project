@@ -1,0 +1,9 @@
+{
+  "name": "spcl",
+  "version": "0.0.1",
+  "description": "spcl socket.io server",
+  "dependencies": {
+    "express": "^4.9.6",
+    "socket.io": "^1.1.0"
+  }
+}

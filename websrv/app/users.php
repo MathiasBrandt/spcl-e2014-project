@@ -28,7 +28,7 @@ function updateStatus($id) {
     $user->save();
     echo $user->toJson();
 
-    sendSyncMessage($user->id, true);
+    //sendSyncMessage($user->id, true);
 }
 
 function createUser() {
