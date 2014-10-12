@@ -17,6 +17,10 @@
     <string name="accelerometer_notification_title">I AM AVAILABLE</string>
     <string name="accelerometer_notification_text">Situated display has changed to free</string>
 
+    <!-- Notification strings -->
+    <string name="notification_title">Pervasive Project</string>
+    <string name="notification_text">Situated display is: </string>
+
     <!-- Mathias strings -->
     <string name="title_activity_create_user">Create New User</string>
     <string name="title_activity_main">Pervasive</string>

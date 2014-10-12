@@ -1,29 +1,34 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="64dp"
     >
 
-    <ImageView
-        android:id="@+id/imagenotileft"
+    <TextView
+        android:id="@+id/notificationTitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/notification_title" />
+
+    <TextView
+        android:id="@+id/notificationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notificationTitle"
+        android:text="@string/notification_text" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_toRightOf="@+id/notificationTitle" />
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_below="@+id/title"
+        android:layout_toRightOf="@+id/notificationText" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp" />
 
-</LinearLayout>
+</RelativeLayout>

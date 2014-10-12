@@ -94,6 +94,7 @@ public class MainService extends IntentService {
             createNotification("You are now set as available", "Pervasive Project", "AVAILABLE", null, false, R.drawable.available);
 
             mSensorManager.unregisterListener(mAccelSensorListener);
+            startGravitySensor();
         }
     }
 
@@ -119,6 +120,10 @@ public class MainService extends IntentService {
         NotificationManager notificationManager = (NotificationManager)
                 this.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);
+    }
+
+    private void createCustomNotification(){
+
     }
 
     private void closeNotification(int notificationId) {
