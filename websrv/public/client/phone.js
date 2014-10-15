@@ -14,9 +14,10 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$interval', '$http', 
         if(!$scope.statusId) return;
 
         var json = angular.toJson({
-            userId: $scope.userId,
-            statusId: $scope.statusId
+            user_id: $scope.userId,
+            status_id: $scope.statusId
         });
+
         $scope.socket.emit('setStatus', json);
     };
 

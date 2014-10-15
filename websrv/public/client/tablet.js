@@ -16,12 +16,15 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$interval', '$http',
 
     $scope.connect = function() {
         $scope.socket = io.connect('http://localhost:3000');
-        $scope.socket.on('statusChanged', function(data) {
-            console.log('statusChanged: ' + data);
 
-            $scope.$apply(function() {
-                $scope.user = angular.fromJson(data);
-            });
+        $scope.socket.on('statusChanged', function(data) {
+            console.log('statusChanged');
+            $scope.refreshUser();
+        });
+
+        $scope.socket.on('messageAdded', function(data) {
+            console.log('statusChanged');
+            $scope.refreshMessages();
         });
     };
 
@@ -31,7 +34,5 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$interval', '$http',
 
     $scope.connect();
     $scope.refreshUser();
-    /*$interval(function() {
-        $scope.refreshMessages();
-    }, 2000);*/
+    $scope.refreshMessages();
 }]);

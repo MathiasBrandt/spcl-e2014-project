@@ -6,18 +6,27 @@
     <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
     <script src="common.js"></script>
     <script src="tablet.js"></script>
+    <link rel="stylesheet" href="style.css?e">
     <title>SPCL tablet</title>
 </head>
-<body ng-controller="tabletCtrl">
-    <h2>
-        <small>This person is</small>
+<body ng-controller="tabletCtrl" ng-class="{ 'bg-green': user.status.id == 1, 'bg-yellow': user.status.id == 2, 'bg-red': user.status.id == 3 }">
+    <h3>
+        {{user.name}}
+    </h3>
+    is
+    <h1>
         {{user.status.description | uppercase}}
-    </h2>
-    <h2>Messages</h2>
-    <ul>
-        <li ng-repeat="message in messages">
-            "{{message.message}}" from {{message.sender.name}} ({{message.urgency.description}})
-        </li>
-    </ul>
+    </h1>
+    <span ng-if="user.status.id == 1">(feel free to knock)</span>
+    <span ng-if="user.status.id == 2">(please leave a message unless urgent)</span>
+    <span ng-if="user.status.id == 3">(do not disturb)</span>
+    <h2>Latest Messages</h2>
+    <div class="messages">
+        <ul>
+            <li ng-repeat="message in messages | limitTo:10">
+                "{{message.message}}" from {{message.sender.name}} ({{message.urgency.description}})
+            </li>
+        </ul>
+    </div>
 </body>
 </html>
