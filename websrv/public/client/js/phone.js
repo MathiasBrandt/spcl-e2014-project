@@ -1,4 +1,4 @@
-angular.module('spcl').controller('phoneCtrl', ['$scope', '$interval', '$http', '$timeout', function($scope, $interval, $http, $timeout) {
+angular.module('spcl').controller('phoneCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.refreshUser = function() {
         $http.get('/users/' + $scope.userId)
             .success(function(data) {

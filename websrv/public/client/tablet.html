@@ -4,29 +4,39 @@
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
-    <script src="common.js"></script>
-    <script src="tablet.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/tablet.js"></script>
     <link rel="stylesheet" href="style.css?e">
     <title>SPCL tablet</title>
 </head>
-<body ng-controller="tabletCtrl" ng-class="{ 'bg-green': user.status.id == 1, 'bg-yellow': user.status.id == 2, 'bg-red': user.status.id == 3 }">
-    <h3>
-        {{user.name}}
-    </h3>
-    is
-    <h1>
-        {{user.status.description | uppercase}}
-    </h1>
-    <span ng-if="user.status.id == 1">(feel free to knock)</span>
-    <span ng-if="user.status.id == 2">(please leave a message unless urgent)</span>
-    <span ng-if="user.status.id == 3">(do not disturb)</span>
-    <h2>Latest Messages</h2>
-    <div class="messages">
+<body ng-controller="tabletCtrl"
+      ng-class="{ 'bg-green': user.status.id == statuses.AVAILABLE, 'bg-yellow': user.status.id == statuses.BUSY, 'bg-red': user.status.id == statuses.VERY_BUSY }">
+<h3>
+    {{user.name}}
+</h3>
+is
+<h1>
+    {{user.status.description | uppercase}}
+</h1>
+<span ng-if="user.status.id == statuses.AVAILABLE">(feel free to knock)</span>
+<span ng-if="user.status.id == statuses.BUSY">(please leave a message unless urgent)</span>
+<span ng-if="user.status.id == statuses.VERY_BUSY">(do not disturb)</span>
+<h2>Latest Messages</h2>
+<div class="messages">
+    <ul>
+        <li ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">
+            "{{message.message}}" from {{message.sender.name}} ({{message.urgency.description}})
+        </li>
+    </ul>
+</div>
+<div ng-if="user.status.id != statuses.AVAILABLE">
+    <h2>Groups</h2>
+    <div class="group" ng-repeat="group in groups">
+        <h3>{{group.name}}</h3>
         <ul>
-            <li ng-repeat="message in messages | limitTo:10">
-                "{{message.message}}" from {{message.sender.name}} ({{message.urgency.description}})
-            </li>
+            <li ng-repeat="user in group.users">{{user.name}} ({{user.status.description}})</li>
         </ul>
     </div>
+</div>
 </body>
 </html>

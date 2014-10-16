@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
-    <script src="common.js"></script>
-    <script src="phone.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/phone.js"></script>
     <title>SPCL phone</title>
 </head>
 <body ng-controller="phoneCtrl">
+    <input type="number" ng-model="userId">
     <input type="number" ng-model="statusId">
     <button ng-click="setStatus()">Update status</button>
 </body>

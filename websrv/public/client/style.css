@@ -4,13 +4,9 @@ body {
     text-align: center;
 }
 
-.messages {
-    width: 350px;
-    margin: auto;
-    text-align: left;
-}
-.messages ul {
+ul {
     list-style: none;
+    padding-left: 0px;
 }
 
 .bg-green {

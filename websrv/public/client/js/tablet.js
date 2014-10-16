@@ -1,4 +1,4 @@
-angular.module('spcl').controller('tabletCtrl', ['$scope', '$interval', '$http', '$timeout', function($scope, $interval, $http, $timeout) {
+angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
     $scope.refreshMessages = function() {
         $http.get('/users/' + $scope.userId + '/messages')
             .success(function(data) {
@@ -11,7 +11,18 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$interval', '$http',
         $http.get('/users/' + $scope.userId)
             .success(function(data) {
                 $scope.user = data;
+                $scope.refreshGroups();
             });
+    };
+
+    $scope.refreshGroups = function() {
+        $scope.groups = [];
+        angular.forEach($scope.user.groups, function(group) {
+            $http.get('/groups/' + group.id)
+                .success(function(data) {
+                    $scope.groups.push(data);
+                });
+        });
     };
 
     $scope.connect = function() {
@@ -28,9 +39,15 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$interval', '$http',
         });
     };
 
-    $scope.userId = 1;
+    $scope.userId = $location.search().user;
     $scope.user = {};
     $scope.messages = [];
+    $scope.groups = [];
+    $scope.statuses = {
+        AVAILABLE: 1,
+        BUSY: 2,
+        VERY_BUSY: 3
+    };
 
     $scope.connect();
     $scope.refreshUser();

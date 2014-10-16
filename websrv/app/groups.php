@@ -5,7 +5,7 @@ function listGroups() {
 }
 
 function getGroup($id) {
-    $group = Group::with('users')->findOrFail($id);
+    $group = Group::with('users.status')->findOrFail($id);
     echo $group->toJson();
 }
 
