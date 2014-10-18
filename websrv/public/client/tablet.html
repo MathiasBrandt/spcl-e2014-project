@@ -22,6 +22,9 @@ is
 <span ng-if="user.status.id == statuses.BUSY">(please leave a message unless urgent)</span>
 <span ng-if="user.status.id == statuses.VERY_BUSY">(do not disturb)</span>
 <h2>Latest Messages</h2>
+<div class="flash bg-green" ng-show="flashShown">
+    Thank you for your message!
+</div>
 <div class="messages">
     <ul>
         <li ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">

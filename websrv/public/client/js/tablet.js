@@ -1,4 +1,4 @@
-angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location', '$timeout', function($scope, $http, $location, $timeout) {
     $scope.refreshMessages = function() {
         $http.get('/users/' + $scope.userId + '/messages')
             .success(function(data) {
@@ -34,8 +34,16 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
         });
 
         $scope.socket.on('messageAdded', function(data) {
-            console.log('statusChanged');
+            console.log('messageAdded');
             $scope.refreshMessages();
+
+            // show flash message and hide it after 5 seconds
+            if(angular.fromJson(data).user_id == $scope.user.id) {
+                $scope.flashShown = true;
+                $timeout(function() {
+                    $scope.flashShown = false;
+                }, 5000);
+            }
         });
     };
 
@@ -48,6 +56,7 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
         BUSY: 2,
         VERY_BUSY: 3
     };
+    $scope.flashShown = false;
 
     $scope.connect();
     $scope.refreshUser();
