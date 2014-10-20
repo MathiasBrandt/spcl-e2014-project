@@ -2,7 +2,6 @@
 use Illuminate\Database\Eloquent\Model as Model;
 
 class Message extends Model {
-    public $timestamps = false;
     protected $guarded = array('id', 'is_sent');
     
     public function user() {

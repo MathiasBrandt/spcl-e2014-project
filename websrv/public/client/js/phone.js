@@ -1,4 +1,4 @@
-angular.module('spcl').controller('phoneCtrl', ['$scope', '$interval', '$http', '$timeout', function($scope, $interval, $http, $timeout) {
+angular.module('spcl').controller('phoneCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.refreshUser = function() {
         $http.get('/users/' + $scope.userId)
             .success(function(data) {
@@ -14,9 +14,10 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$interval', '$http', 
         if(!$scope.statusId) return;
 
         var json = angular.toJson({
-            userId: $scope.userId,
-            statusId: $scope.statusId
+            user_id: $scope.userId,
+            status_id: $scope.statusId
         });
+
         $scope.socket.emit('setStatus', json);
     };
 
