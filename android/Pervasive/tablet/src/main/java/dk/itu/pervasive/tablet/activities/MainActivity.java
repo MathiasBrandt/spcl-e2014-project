@@ -6,10 +6,17 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import dk.itu.pervasive.common.Common;
+import dk.itu.pervasive.common.IOnCompleteListener;
 import dk.itu.pervasive.common.User;
 import dk.itu.pervasive.tablet.R;
 
@@ -40,6 +47,35 @@ public class MainActivity extends Activity {
             setUserName(user.getName());
             setUserState(user.getStatusId());
         }
+
+        populateGroupMembers();
+    }
+
+    private void populateGroupMembers() {
+        Common.getUsers(this, new IOnCompleteListener() {
+            @Override
+            public void onComplete(String jsonData) {
+                List<User> users = Common.deserializeUsers(jsonData);
+                List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
+
+                for(User u : users) {
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    map.put("NAME", u.getName());
+                    map.put("STATUS", "" + u.getStatusId());
+                    data.add(map);
+                }
+
+                String[] from = new String[] { "NAME", "STATUS" };
+                int[] to = new int[] { R.id.derp_name, R.id.derp_status };
+
+                SimpleAdapter adapter = new SimpleAdapter(MainActivity.this, data, R.layout.group_grid_item, from, to);
+
+
+                GridView grid = (GridView) findViewById(R.id.gridGroupMembers);
+                grid.setNumColumns(2);
+                grid.setAdapter(adapter);
+            }
+        });
     }
 
     private void setUserName(String userName) {

@@ -49,7 +49,19 @@
         android:layout_marginRight="@dimen/frameBottomUI_horizontal_margin"
         android:layout_marginLeft="@dimen/frameBottomUI_horizontal_margin">
 
+        <RelativeLayout
+            android:id="@+id/frameGroupInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp">
 
+                <GridView
+                    android:id="@+id/gridGroupMembers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    </GridView>
+            </RelativeLayout>
 
         </RelativeLayout>
 
