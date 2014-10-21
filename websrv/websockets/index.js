@@ -58,6 +58,9 @@ function handleMessage(name, data) {
         });
     });
 
+    request.on('error', function() {
+        console.error('error in api request');
+    });
     request.write(body);
     request.end();
 }
