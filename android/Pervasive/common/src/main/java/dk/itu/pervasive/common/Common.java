@@ -10,6 +10,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.util.List;
 
 
@@ -51,6 +55,10 @@ public class Common {
     public static final int URGENCY_LOW = 1;
     public static final int URGENCY_MEDIUM = 2;
     public static final int URGENCY_HIGH = 3;
+
+    public static final String SOCKET_IO_URL = "http://178.62.255.11:3000";
+    public static final String SOCKET_IO_SET_STATUS = "setStatus";
+    public static final String SOCKET_IO_STATUS_CHANGED = "statusChanged";
 
     private Common() {}
 
@@ -407,5 +415,45 @@ public class Common {
 
     public static void stopService(Context context) {
 
+    }
+
+    public static void setStatus(int userId, int statusId) {
+        UserStatus status = new UserStatus(userId, statusId);
+        new setStatusAsyncTask(status).execute();
+    }
+
+    static class setStatusAsyncTask extends AsyncTask<Void, Void, Void> {
+        UserStatus status;
+
+        public setStatusAsyncTask(UserStatus status) {
+            super();
+
+            this.status = status;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                final Socket socket = IO.socket(Common.SOCKET_IO_URL);
+
+                socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+                        Log.d(TAG, String.format("Connected to socket.io endpoint. Setting status %d for user %d", status.getStatusId(), status.getUserId()));
+
+                        Gson gson = new Gson();
+                        String json = gson.toJson(status);
+
+                        socket.emit(Common.SOCKET_IO_SET_STATUS, json);
+                    }
+                });
+
+                socket.connect();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
     }
 }
