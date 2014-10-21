@@ -47,6 +47,10 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
         });
     };
 
+    $scope.exceptOwner = function(user) {
+        return user.id != $scope.user.id;
+    };
+
     $scope.userId = $location.search().user;
     $scope.user = {};
     $scope.messages = [];
@@ -55,6 +59,11 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
         AVAILABLE: 1,
         BUSY: 2,
         VERY_BUSY: 3
+    };
+    $scope.urgencies = {
+        LOW: 1,
+        MEDIUM: 2,
+        HIGH: 3
     };
     $scope.flashShown = false;
 
