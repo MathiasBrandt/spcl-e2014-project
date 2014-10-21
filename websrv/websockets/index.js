@@ -11,6 +11,7 @@ function handleMessage(name, data) {
     var method = 'GET';
     var body = '';
     var eventName = '';
+    var eventBody = '';
 
     switch (name) {
         case 'setStatus':
@@ -20,12 +21,18 @@ function handleMessage(name, data) {
                 status_id: data.status_id
             });
             eventName = 'statusChanged';
+            eventBody = JSON.stringify({
+                user_id: data.user_id
+            });
             break;
         case 'addMessage':
             path = '/users/' + data.to_user_id + '/messages';
             method = 'POST';
             body = JSON.stringify(data);
             eventName = 'messageAdded';
+            eventBody = JSON.stringify({
+                user_id: data.to_user_id
+            });
             break;
         default:
             return;
@@ -34,7 +41,7 @@ function handleMessage(name, data) {
     var responseData = '';
     var request = client.request({
         hostname: 'localhost',
-        port: 8888,
+        port: 80,
         path: path,
         method: method
     }, function(response) {
@@ -46,8 +53,8 @@ function handleMessage(name, data) {
             console.error('error in api request');
         });
         response.on('end', function() {
-            console.log('emitting ' + eventName);
-            io.emit(eventName, '');
+            console.log('emitting ' + eventName + ' with ' + eventBody);
+            io.emit(eventName, eventBody);
         });
     });
 
@@ -58,19 +65,27 @@ function handleMessage(name, data) {
 // initialize server
 io.on('connection', function(socket) {
     socket.on('setStatus', function(data) {
-        var data = JSON.parse(data);
-        if(!data)
-            return;
+        try {
+            var data = JSON.parse(data);
+            if (!data)
+                return;
 
-        handleMessage('setStatus', data);
+            handleMessage('setStatus', data);
+        } catch (err) {
+            console.error('error thrown by setStatus: ' + err.toString());
+        }
     });
 
     socket.on('addMessage', function(data) {
-        var data = JSON.parse(data);
-        if(!data)
-            return;
+        try {
+            var data = JSON.parse(data);
+            if (!data)
+                return;
 
-        handleMessage('addMessage', data);
+            handleMessage('addMessage', data);
+        } catch (err) {
+            console.error('error thrown by addMessage: ' + err.toString());
+        }
     });
 });
 

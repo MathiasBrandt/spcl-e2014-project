@@ -26,7 +26,7 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
     };
 
     $scope.connect = function() {
-        $scope.socket = io.connect('http://localhost:3000');
+        $scope.socket = io.connect('http://' + window.location.hostname + ':3000');
 
         $scope.socket.on('statusChanged', function(data) {
             console.log('statusChanged');

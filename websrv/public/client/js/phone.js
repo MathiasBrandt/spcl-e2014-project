@@ -7,7 +7,7 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$http', function($sco
     };
 
     $scope.connect = function() {
-        $scope.socket = io.connect('http://localhost:3000');
+        $scope.socket = io.connect('http://' + window.location.hostname + ':3000');
     };
 
     $scope.setStatus = function() {
