@@ -5,7 +5,7 @@ var client = require('http');
 
 // handle an incoming message and notify other clients about it
 function handleMessage(name, data) {
-    console.log('received ' + name + ' with ' + data);
+    console.log('received ' + name + ' with ' + JSON.stringify(data));
 
     var path = '/';
     var method = 'GET';
