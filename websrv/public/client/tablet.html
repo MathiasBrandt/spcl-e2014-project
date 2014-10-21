@@ -4,41 +4,54 @@
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/tablet.js"></script>
+    <script src="js/common.js?e"></script>
+    <script src="js/tablet.js?e"></script>
     <link rel="stylesheet" href="style.css?e">
     <title>SPCL tablet</title>
 </head>
 <body ng-controller="tabletCtrl"
       ng-class="{ 'bg-green': user.status.id == statuses.AVAILABLE, 'bg-yellow': user.status.id == statuses.BUSY, 'bg-red': user.status.id == statuses.VERY_BUSY }">
-<h3>
-    {{user.name}}
-</h3>
-is
-<h1>
-    {{user.status.description | uppercase}}
-</h1>
-<span ng-if="user.status.id == statuses.AVAILABLE">(feel free to knock)</span>
-<span ng-if="user.status.id == statuses.BUSY">(please leave a message unless urgent)</span>
-<span ng-if="user.status.id == statuses.VERY_BUSY">(do not disturb)</span>
-<h2>Latest Messages</h2>
-<div class="flash bg-green" ng-show="flashShown">
-    Thank you for your message!
-</div>
-<div class="messages">
-    <ul>
-        <li ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">
-            "{{message.message}}" from {{message.sender.name}} ({{message.urgency.description}})
-        </li>
-    </ul>
-</div>
-<div ng-if="user.status.id != statuses.AVAILABLE">
-    <h2>Groups</h2>
-    <div class="group" ng-repeat="group in groups">
-        <h3>{{group.name}}</h3>
+<div class="container">
+    <h3>
+        {{user.name}}
+    </h3>
+    <h1 style="margin-bottom: 0px">
+        {{user.status.description | uppercase}}
+    </h1>
+    <p class="center" style="margin-top: 0px">
+        <span class="center" ng-if="user.status.id == statuses.AVAILABLE">(feel free to knock)</span>
+        <span class="center" ng-if="user.status.id == statuses.BUSY">(please leave a message)</span>
+        <span class="center" ng-if="user.status.id == statuses.VERY_BUSY">(do not disturb)</span>
+    </p>
+    <h2>Latest Visitors</h2>
+    <div class="flash bg-green" ng-show="flashShown">
+        Thank you for your message!
+    </div>
+    <div class="messages">
         <ul>
-            <li ng-repeat="user in group.users">{{user.name}} ({{user.status.description}})</li>
+            <li ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">
+                <div class="urgency-box">
+                    <span ng-if="message.urgency.id == urgencies.LOW">!</span>
+                    <span ng-if="message.urgency.id == urgencies.MEDIUM">!!</span>
+                    <span ng-if="message.urgency.id == urgencies.HIGH">!!!</span>
+                </div>
+                {{message.sender.name}}
+            </li>
         </ul>
+    </div>
+    <div ng-if="user.status.id != statuses.AVAILABLE">
+        <h2>Groups</h2>
+        <div class="group" ng-repeat="group in groups">
+            <h3>{{group.name}}</h3>
+            <ul>
+                <li ng-repeat="groupUser in group.users | filter:exceptOwner | orderBy:['status.id','name']">
+                    <div class="status-box"
+                         ng-class="{ 'bg-green': groupUser.status.id == statuses.AVAILABLE, 'bg-yellow': groupUser.status.id == statuses.BUSY, 'bg-red': groupUser.status.id == statuses.VERY_BUSY }"></div>
+                    {{groupUser.name}}
+                    <span ng-if="groupUser.location">({{groupUser.location}})</span>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 </body>
