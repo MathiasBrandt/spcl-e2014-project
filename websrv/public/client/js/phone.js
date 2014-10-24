@@ -1,21 +1,25 @@
-angular.module('spcl').controller('phoneCtrl', ['$scope', '$http', function($scope, $http) {
+angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', 'commonService', function($scope, $location, commonService) {
     $scope.refreshUser = function() {
-        $http.get('/users/' + $scope.userId)
-            .success(function(data) {
-                $scope.user = data;
-            });
+        $scope.user = commonService.users.get({id: $scope.userId});
     };
 
     $scope.connect = function() {
         $scope.socket = io.connect('http://' + window.location.hostname + ':3000');
+
+        $scope.socket.on('statusChanged', function(data) {
+            console.log('statusChanged');
+            $scope.refreshUser();
+        });
+
+        $scope.refreshUser();
     };
 
-    $scope.setStatus = function() {
-        if(!$scope.statusId) return;
+    $scope.setStatus = function(statusId) {
+        if(!statusId) return;
 
         var json = angular.toJson({
             user_id: $scope.userId,
-            status_id: $scope.statusId
+            status_id: statusId
         });
 
         $scope.socket.emit('setStatus', json);
@@ -26,10 +30,15 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$http', function($sco
         $scope.socket.emit('addMessage', json);
     };
 
-    $scope.userId = 1;
+    $scope.userId = $location.search().user;
     $scope.user = {};
-    $scope.message = {};
+    $scope.message = {
+        from_user_id: $scope.userId,
+        message: '',
+        urgency_id: commonService.urgencies.LOW
+    };
+    $scope.statuses = commonService.statuses;
+    $scope.urgencies = commonService.urgencies;
 
     $scope.connect();
-    $scope.refreshUser();
 }]);

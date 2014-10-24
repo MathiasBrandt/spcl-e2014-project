@@ -1,28 +1,16 @@
-angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location', '$timeout', function($scope, $http, $location, $timeout) {
+angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location', '$timeout', 'commonService', function($scope, $http, $location, $timeout, commonService) {
     $scope.refreshMessages = function() {
-        $http.get('/users/' + $scope.userId + '/messages')
-            .success(function(data) {
-                //$scope.messages = $scope.messages.concat(data);
-                $scope.messages = data;
-            });
+        $scope.messages = commonService.messages.query({id: $scope.userId});
     };
 
     $scope.refreshUser = function() {
-        $http.get('/users/' + $scope.userId)
-            .success(function(data) {
-                $scope.user = data;
-                $scope.refreshGroups();
-            });
-    };
-
-    $scope.refreshGroups = function() {
-        $scope.groups = [];
-        angular.forEach($scope.user.groups, function(group) {
-            $http.get('/groups/' + group.id)
-                .success(function(data) {
-                    $scope.groups.push(data);
+        $scope.user = commonService.users.get({id: $scope.userId},
+            function(data) {
+                $scope.groups = [];
+                angular.forEach(data.groups, function(group) {
+                    $scope.groups.push(commonService.groups.get({id: group.id}));
                 });
-        });
+            });
     };
 
     $scope.connect = function() {
@@ -45,6 +33,9 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
                 }, 5000);
             }
         });
+
+        $scope.refreshUser();
+        $scope.refreshMessages();
     };
 
     $scope.exceptOwner = function(user) {
@@ -55,19 +46,9 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
     $scope.user = {};
     $scope.messages = [];
     $scope.groups = [];
-    $scope.statuses = {
-        AVAILABLE: 1,
-        BUSY: 2,
-        VERY_BUSY: 3
-    };
-    $scope.urgencies = {
-        LOW: 1,
-        MEDIUM: 2,
-        HIGH: 3
-    };
     $scope.flashShown = false;
+    $scope.statuses = commonService.statuses;
+    $scope.urgencies = commonService.urgencies;
 
     $scope.connect();
-    $scope.refreshUser();
-    $scope.refreshMessages();
 }]);
