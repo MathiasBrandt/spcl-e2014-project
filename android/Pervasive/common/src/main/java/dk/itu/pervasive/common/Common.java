@@ -59,6 +59,7 @@ public class Common {
     public static final String SOCKET_IO_URL = "http://178.62.255.11:3000";
     public static final String SOCKET_IO_SET_STATUS = "setStatus";
     public static final String SOCKET_IO_STATUS_CHANGED = "statusChanged";
+    public static final String SOCKET_IO_ADD_MESSAGE = "addMessage";
 
     private Common() {}
 
@@ -445,6 +446,55 @@ public class Common {
                         String json = gson.toJson(status);
 
                         socket.emit(Common.SOCKET_IO_SET_STATUS, json);
+                    }
+                });
+
+                socket.connect();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
+
+    public static void addMessage(int fromUserId, int toUserId, int toGroupId, int urgencyId, String messageText) {
+        Message message = new Message(fromUserId, toUserId, toGroupId, urgencyId, messageText);
+        new addMessageAsyncTask(message).execute();
+    }
+
+    static class addMessageAsyncTask extends AsyncTask<Void, Void, Void> {
+        Message message;
+
+        public addMessageAsyncTask(Message message) {
+            super();
+
+            this.message = message;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                final Socket socket = IO.socket(Common.SOCKET_IO_URL);
+
+                socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+                        Log.d(TAG, String.format("Connected to socket.io endpoint. " +
+                                        "Adding message from %d, " +
+                                        "to user %d or group %d, " +
+                                        "urgency %d " +
+                                        "content %s",
+                                message.getFromUserId(),
+                                message.getToUserId(),
+                                message.getToGroupId(),
+                                message.getUrgencyId(),
+                                message.getMessage()));
+
+                        Gson gson = new Gson();
+                        String json = gson.toJson(message);
+
+                        socket.emit(Common.SOCKET_IO_ADD_MESSAGE, json);
                     }
                 });
 
