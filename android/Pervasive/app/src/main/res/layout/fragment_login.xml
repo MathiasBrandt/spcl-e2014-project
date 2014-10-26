@@ -34,6 +34,13 @@
         android:hint="@string/set_phone_number"
         android:visibility="invisible"
         />
+    <EditText
+        android:id="@+id/set_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/set_location"
+        android:visibility="invisible"
+        />
 
     <Button
         android:id="@+id/create_user_button"

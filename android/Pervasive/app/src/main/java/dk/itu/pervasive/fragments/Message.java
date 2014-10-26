@@ -8,7 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import dk.itu.pervasive.R;
+import dk.itu.pervasive.common.Common;
+import dk.itu.pervasive.common.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +30,11 @@ public class Message extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Button submitButton;
+    EditText messageInput;
+    RadioButton lowUrgencyRadio;
+    RadioButton highUrgencyRadio;
 
 
     /**
@@ -58,10 +68,31 @@ public class Message extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message, container, false);
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
+
+        submitButton = (Button) view.findViewById(R.id.submit_message_button);
+        messageInput = (EditText) view.findViewById(R.id.message_field);
+        lowUrgencyRadio = (RadioButton) view.findViewById(R.id.low_urgency_radio);
+        highUrgencyRadio = (RadioButton) view.findViewById(R.id.high_urgency_radio);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User user = Common.getUserFromPreferences(getActivity());
+
+                if(user == null)
+                    return;
+
+                int urgency = highUrgencyRadio.isChecked() ? Common.URGENCY_HIGH : Common.URGENCY_LOW;
+                int toUserId = 1; // get user id from tag instead
+
+                Common.addMessage(user.getId(), toUserId, null, urgency, messageInput.getText().toString().trim());
+            }
+        });
+
+        return view;
     }
 
 

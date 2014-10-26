@@ -50,11 +50,9 @@ public class Common {
 
     public static final int USER_STATE_AVAILABLE = 1;
     public static final int USER_STATE_BUSY = 2;
-    public static final int USER_STATE_VERY_BUSY = 3;
 
     public static final int URGENCY_LOW = 1;
-    public static final int URGENCY_MEDIUM = 2;
-    public static final int URGENCY_HIGH = 3;
+    public static final int URGENCY_HIGH = 2;
 
     public static final String SOCKET_IO_URL = "http://178.62.255.11:3000";
     public static final String SOCKET_IO_SET_STATUS = "setStatus";
@@ -225,8 +223,8 @@ public class Common {
         return responseString;
     }
 
-    public static void createUser(Activity context, String name, String phone, String email) {
-        new CreateUserAsyncTask(context, name, phone, email).execute();
+    public static void createUser(Activity context, String name, String phone, String email, String location) {
+        new CreateUserAsyncTask(context, name, phone, email, location).execute();
     }
 
     public static void getUsers(Activity context, IOnCompleteListener onCompleteListener) {
@@ -277,12 +275,14 @@ public class Common {
         private String name;
         private String phone;
         private String email;
+        private String location;
 
-        public CreateUserAsyncTask(Activity context, String name, String phone, String email) {
+        public CreateUserAsyncTask(Activity context, String name, String phone, String email, String location) {
             this.context = context;
             this.name = name;
             this.phone = phone;
             this.email = email;
+            this.location = location;
             loadingDialog = new ProgressDialog(context);
         }
 
@@ -308,7 +308,7 @@ public class Common {
          * @return the id of the newly created user or -1 on failure.
          */
         private User postUser() {
-            User user = new User(name, phone, email, 1);
+            User user = new User(name, phone, email, Common.USER_STATE_AVAILABLE, location);
             String userJson = Common.serializeUser(user);
 
             HttpResponse response = Common.sendHttpPost(Common.API_CREATE_USER, userJson);
@@ -458,7 +458,7 @@ public class Common {
         }
     }
 
-    public static void addMessage(int fromUserId, int toUserId, int toGroupId, int urgencyId, String messageText) {
+    public static void addMessage(int fromUserId, Integer toUserId, Integer toGroupId, int urgencyId, String messageText) {
         Message message = new Message(fromUserId, toUserId, toGroupId, urgencyId, messageText);
         new addMessageAsyncTask(message).execute();
     }

@@ -48,7 +48,7 @@ public class Login extends Fragment {
     EditText inputNameField;
     EditText inputEmailField;
     EditText inputPhoneField;
-
+    EditText inputLocationField;
 
 
 
@@ -114,6 +114,7 @@ public class Login extends Fragment {
         inputNameField = (EditText) view.findViewById(R.id.set_name);
         inputEmailField = (EditText) view.findViewById(R.id.set_email);
         inputPhoneField = (EditText) view.findViewById(R.id.set_phone_number);
+        inputLocationField = (EditText) view.findViewById(R.id.set_location);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,12 +145,14 @@ public class Login extends Fragment {
                     inputNameField.setVisibility(View.VISIBLE);
                     inputEmailField.setVisibility(View.VISIBLE);
                     inputPhoneField.setVisibility(View.VISIBLE);
+                    inputLocationField.setVisibility(View.VISIBLE);
                     createUser.setVisibility(View.VISIBLE);
 
                     // start animtaion on views (defined in res/anim folder)
                     inputNameField.startAnimation(loginFieldsAnimation);
                     inputEmailField.startAnimation(loginFieldsAnimation);
                     inputPhoneField.startAnimation(loginFieldsAnimation);
+                    inputLocationField.startAnimation(loginFieldsAnimation);
                     createUser.startAnimation(loginFieldsAnimation);
 
                 }
@@ -166,8 +169,9 @@ public class Login extends Fragment {
                     String name = inputNameField.getText().toString().trim();
                     String phone = inputEmailField.getText().toString().trim();
                     String email = inputPhoneField.getText().toString().trim().toLowerCase();
+                    String location = inputLocationField.getText().toString().trim();
 
-                    Common.createUser(getActivity(), name, phone, email);
+                    Common.createUser(getActivity(), name, phone, email, location);
 
                     // if user now exists close activity
 

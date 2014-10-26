@@ -6,12 +6,12 @@ package dk.itu.pervasive.common;
 
 public class Message {
     private int fromUserId;
-    private int toUserId;
-    private int toGroupId;
+    private Integer toUserId;
+    private Integer toGroupId;
     private int urgencyId;
     private String message;
 
-    public Message(int fromUserId, int toUserId, int toGroupId, int urgencyId, String message) {
+    public Message(int fromUserId, Integer toUserId, Integer toGroupId, int urgencyId, String message) {
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.toGroupId = toGroupId;
@@ -23,11 +23,11 @@ public class Message {
         return fromUserId;
     }
 
-    public int getToUserId() {
+    public Integer getToUserId() {
         return toUserId;
     }
 
-    public int getToGroupId() {
+    public Integer getToGroupId() {
         return toGroupId;
     }
 

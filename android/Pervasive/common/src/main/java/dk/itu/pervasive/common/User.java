@@ -13,16 +13,18 @@ public class User {
     private String email;
     @SerializedName("status_id")
     private int statusId;
+    private String location;
 
     public User() {
 
     }
 
-    public User(String name, String phone, String email, int statusId) {
+    public User(String name, String phone, String email, int statusId, String location) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.statusId = statusId;
+        this.location = location;
     }
 
     public int getId() {
@@ -32,6 +34,7 @@ public class User {
     public String getPhone() { return phone; }
     public String getEmail() { return email; }
     public int getStatusId() { return statusId; }
+    public String getLocation() { return location; }
 
     @Override
     public String toString() {

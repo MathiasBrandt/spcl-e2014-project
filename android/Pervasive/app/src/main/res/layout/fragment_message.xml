@@ -5,17 +5,29 @@
     android:orientation="vertical"
     tools:context="dk.itu.pervasive.fragments.Message">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/message_fragment" />
-
     <EditText
         android:id="@+id/message_field"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:hint="@string/message_hint" />
 
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/low_urgency"
+                android:id="@+id/low_urgency_radio"/>
+
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/high_urgency"
+                android:id="@+id/high_urgency_radio"/>
+
+    </RadioGroup>
     <Button
         android:id="@+id/submit_message_button"
         android:layout_width="match_parent"
