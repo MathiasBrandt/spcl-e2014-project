@@ -8,12 +8,14 @@ angular.module('spcl', ['ngResource'])
 
         this.statuses = {
             AVAILABLE: 1,
-            BUSY: 2,
-            VERY_BUSY: 3
+            BUSY: 2
         };
         this.urgencies = {
             LOW: 1,
-            MEDIUM: 2,
-            HIGH: 3
+            HIGH: 2
+        };
+
+        this.stringToDate = function(str) {
+            return new Date(str);
         };
     }]);

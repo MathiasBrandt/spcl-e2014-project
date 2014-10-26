@@ -2,54 +2,65 @@
 <html ng-app="spcl">
 <head lang="en">
     <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
     <script src="js/angular-resource.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/common.js?e"></script>
     <script src="js/tablet.js?e"></script>
-    <link rel="stylesheet" href="style.css?e">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?e">
     <title>SPCL tablet</title>
 </head>
 <body ng-controller="tabletCtrl"
-      ng-class="{ 'bg-green': user.status.id == statuses.AVAILABLE, 'bg-yellow': user.status.id == statuses.BUSY, 'bg-red': user.status.id == statuses.VERY_BUSY }">
-<div class="container">
-    <h3>
+      ng-class="{ 'bg-green': user.status.id == statuses.AVAILABLE, 'bg-red': user.status.id == statuses.BUSY }">
+<div class="container" style="width: 350px;">
+    <h3 class="text-center">
         {{user.name}}
     </h3>
-    <h1 style="margin-bottom: 0px">
+    <h1 class="text-center" style="margin-bottom: 0px">
         {{user.status.description | uppercase}}
     </h1>
-    <p class="center" style="margin-top: 0px">
-        <span class="center" ng-if="user.status.id == statuses.AVAILABLE">(feel free to knock)</span>
-        <span class="center" ng-if="user.status.id == statuses.BUSY">(please leave a message)</span>
-        <span class="center" ng-if="user.status.id == statuses.VERY_BUSY">(do not disturb)</span>
+    <p class="text-center">
+        <span ng-if="user.status.id == statuses.AVAILABLE">(feel free to knock)</span>
+        <span ng-if="user.status.id == statuses.BUSY">(please leave a message)</span>
     </p>
-    <h2>Latest Visitors</h2>
-    <div class="flash bg-green" ng-show="flashShown">
-        Thank you for your message!
+    <h2 class="text-center">Latest Visitors</h2>
+    <div class="panel panel-success" ng-show="flashShown">
+        <div class="panel-body">
+            Thank you for your message!
+        </div>
     </div>
-    <div class="messages">
-        <ul>
-            <li ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">
-                <div class="urgency-box">
-                    <span ng-if="message.urgency.id == urgencies.LOW">!</span>
-                    <span ng-if="message.urgency.id == urgencies.MEDIUM">!!</span>
-                    <span ng-if="message.urgency.id == urgencies.HIGH">!!!</span>
-                </div>
+    <ul class="list-unstyled">
+        <li ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">
+            <div class="urgency-box">
+                <span ng-if="message.urgency.id == urgencies.LOW">!</span>
+                <span ng-if="message.urgency.id == urgencies.HIGH">!!</span>
+            </div>
+            <div class="name-box">
                 {{message.sender.name}}
-            </li>
-        </ul>
-    </div>
+            </div>
+            <div class="location-box">
+                {{commonService.stringToDate(message.created_at) | date:'HH:mm'}}
+            </div>
+        </li>
+    </ul>
     <div ng-if="user.status.id != statuses.AVAILABLE">
-        <h2>Groups</h2>
-        <div class="group" ng-repeat="group in groups">
+        <h2 class="text-center">Groups</h2>
+        <div ng-repeat="group in groups">
             <h3>{{group.name}}</h3>
-            <ul>
+            <ul class="list-unstyled">
                 <li ng-repeat="groupUser in group.users | filter:exceptOwner | orderBy:['status.id','name']">
                     <div class="status-box"
-                         ng-class="{ 'bg-green': groupUser.status.id == statuses.AVAILABLE, 'bg-yellow': groupUser.status.id == statuses.BUSY, 'bg-red': groupUser.status.id == statuses.VERY_BUSY }"></div>
-                    {{groupUser.name}}
-                    <span ng-if="groupUser.location">({{groupUser.location}})</span>
+                         ng-class="{ 'bg-green': groupUser.status.id == statuses.AVAILABLE, 'bg-red': groupUser.status.id == statuses.BUSY }">
+                     </div>
+                    <div class="name-box">
+                        {{groupUser.name}}
+                    </div>
+                    <div class="location-box" ng-if="groupUser.location">
+                        {{groupUser.location}}
+                    </div>
                 </li>
             </ul>
         </div>

@@ -1,15 +1,21 @@
 angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location', '$timeout', 'commonService', function($scope, $http, $location, $timeout, commonService) {
     $scope.refreshMessages = function() {
-        $scope.messages = commonService.messages.query({id: $scope.userId});
+        commonService.messages.query({id: $scope.userId}, function(data) {
+            $scope.messages = data;
+        });
     };
 
     $scope.refreshUser = function() {
-        $scope.user = commonService.users.get({id: $scope.userId},
+        commonService.users.get({id: $scope.userId},
             function(data) {
-                $scope.groups = [];
+                $scope.user = data;
+
+                var groups = [];
                 angular.forEach(data.groups, function(group) {
-                    $scope.groups.push(commonService.groups.get({id: group.id}));
+                    groups.push(commonService.groups.get({id: group.id}));
                 });
+
+                $scope.groups = groups;
             });
     };
 
@@ -34,6 +40,10 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
             }
         });
 
+        $scope.socket.on('tabletUpdated', function() {
+            window.location.reload();
+        });
+
         $scope.refreshUser();
         $scope.refreshMessages();
     };
@@ -49,6 +59,7 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
     $scope.flashShown = false;
     $scope.statuses = commonService.statuses;
     $scope.urgencies = commonService.urgencies;
+    $scope.commonService = commonService;
 
     $scope.connect();
 }]);
