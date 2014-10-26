@@ -4,6 +4,7 @@
     <string name="login_fragment">Login Fragment</string>
     <string name="message_hint">Message (optional)</string>
     <string name="submit_message">Submit your message</string>
+    <string name="cancel">Cancel</string>
     <string name="low_urgency">Low urgency</string>
     <string name="high_urgency">High urgency</string>
     <string name="login">Login</string>

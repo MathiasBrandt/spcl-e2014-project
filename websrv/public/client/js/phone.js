@@ -43,25 +43,7 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
         $scope.socket.emit('setStatus', json);
     };
 
-    $scope.sendMessage = function() {
-        if(!$scope.user)
-            return;
-
-        $scope.message.from_user_id = $scope.userId;
-
-        var json = angular.toJson($scope.message);
-        $scope.socket.emit('addMessage', json);
-
-        $scope.flashShown = true;
-        $timeout(function() {
-            $scope.flashShown = false;
-        }, 2000);
-    };
-
     $scope.userId = $location.search().user;
-    $scope.message = {
-        urgency_id: commonService.urgencies.LOW
-    };
     $scope.statuses = commonService.statuses;
     $scope.urgencies = commonService.urgencies;
     $scope.commonService = commonService;

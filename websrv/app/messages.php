@@ -40,19 +40,29 @@ function sendMessageToUser($id) {
     $app = Slim\Slim::getInstance();
     $user = User::findOrFail($id);
     $json = decodeJsonOrFail($app->request->getBody());
+
+    if(!isset($json['from']))
+        $json['from'] = null;
+    if(!isset($json['from_user_id']))
+        $json['from_user_id'] = null;
     
     $message = new Message($json);
     $message->user()->associate($user);
     $message->save();
     echo $message->toJson();
 
-    sendSyncMessage($user->id, false);
+    //sendSyncMessage($user->id, false);
 }
 
 function sendMessageToGroup($id) {
     $app = Slim\Slim::getInstance();
     $group = Group::findOrFail($id);
     $json = decodeJsonOrFail($app->request->getBody());
+
+    if(!isset($json['from']))
+        $json['from'] = null;
+    if(!isset($json['from_user_id']))
+        $json['from_user_id'] = null;
     
     $message = new Message($json);
     $message->group()->associate($group);

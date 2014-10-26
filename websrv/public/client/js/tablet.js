@@ -52,11 +52,24 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
         return user.id != $scope.user.id;
     };
 
+    $scope.sendMessage = function() {
+        if(!$scope.user)
+            return;
+
+        $scope.message.to_user_id = $scope.userId;
+
+        var json = angular.toJson($scope.message);
+        $scope.socket.emit('addMessage', json);
+    };
+
     $scope.userId = $location.search().user;
     $scope.user = {};
     $scope.messages = [];
     $scope.groups = [];
     $scope.flashShown = false;
+    $scope.message = {
+        urgency_id: commonService.urgencies.LOW
+    };
     $scope.statuses = commonService.statuses;
     $scope.urgencies = commonService.urgencies;
     $scope.commonService = commonService;

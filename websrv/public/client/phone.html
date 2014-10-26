@@ -26,45 +26,12 @@
          ng-class="{ 'panel-success': message.urgency.id == urgencies.LOW, 'panel-danger': message.urgency.id == urgencies.HIGH }"
          ng-repeat="message in messages | orderBy:'created_at':true">
         <div class="panel-heading">
-            <h4>{{message.sender.name}} <small>at {{commonService.stringToDate(message.created_at) | date:'yyyy-MM-dd HH:mm'}}</small></h4>
+            <h4>{{message.sender ? message.sender.name : message.from}} <small>at {{commonService.stringToDate(message.created_at) | date:'yyyy-MM-dd HH:mm'}}</small></h4>
         </div>
         <div class="panel-body" ng-if="message.message">
             {{message.message}}
         </div>
     </div>
-    <h1>Send message</h1>
-    <div class="panel panel-success" ng-show="flashShown">
-        <div class="panel-body">
-            Message sent!
-        </div>
-    </div>
-    <form>
-        <div class="form-group">
-            <label class="control-label" for="toUserId">To user id</label>
-            <input type="number" id="toUserId" class="form-control" ng-model="message.to_user_id" required>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="messageText">Message text</label>
-            <input type="text" id="messageText" class="form-control" ng-model="message.message">
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.LOW" name="urgency">
-                Low urgency
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.HIGH" name="urgency">
-                High urgency
-            </label>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-default" ng-click="sendMessage()" ng-disabled="!message.to_user_id || !message.urgency_id">
-                Send
-            </button>
-        </div>
-    </form>
 </div>
 </body>
 </html>

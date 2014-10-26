@@ -26,26 +26,6 @@
         <span ng-if="user.status.id == statuses.AVAILABLE">(feel free to knock)</span>
         <span ng-if="user.status.id == statuses.BUSY">(please leave a message)</span>
     </p>
-    <h2 class="text-center">Latest Visitors</h2>
-    <div class="panel panel-success" ng-show="flashShown">
-        <div class="panel-body">
-            Thank you for your message!
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row" ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">
-            <div class="urgency-box col-sm-2">
-                <span ng-if="message.urgency.id == urgencies.LOW">!</span>
-                <span ng-if="message.urgency.id == urgencies.HIGH">!!</span>
-            </div>
-            <div class="name-box col-sm-7">
-                {{message.sender.name}}
-            </div>
-            <div class="time-box col-sm-3">
-                {{commonService.stringToDate(message.created_at) | date:'HH:mm'}}
-            </div>
-        </div>
-    </div>
     <div ng-if="user.status.id != statuses.AVAILABLE">
         <h2 class="text-center">Groups</h2>
         <div ng-repeat="group in groups">
@@ -64,6 +44,54 @@
                         {{groupUser.location}}
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="user.status.id != statuses.AVAILABLE">
+        <h2 class="text-center">Leave message</h2>
+        <div class="panel panel-success" ng-show="flashShown">
+            <div class="panel-heading">
+                Thank you for your message!
+            </div>
+        </div>
+        <form>
+            <div class="form-group">
+                <input type="text" id="fromUser" class="form-control" placeholder="Your name" maxlength="255" ng-model="message.from" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="messageText" class="form-control" placeholder="Message and contact info (optional)" maxlength="255" ng-model="message.message">
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.LOW" name="urgency">
+                    Low urgency
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.HIGH" name="urgency">
+                    High urgency
+                </label>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default" ng-click="sendMessage()" ng-disabled="!message.from || !message.urgency_id">
+                    Send
+                </button>
+            </div>
+        </form>
+    </div>
+    <h2 class="text-center">Latest Visitors</h2>
+    <div class="container-fluid">
+        <div class="row" ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">
+            <div class="urgency-box col-sm-2">
+                <span ng-if="message.urgency.id == urgencies.LOW">!</span>
+                <span ng-if="message.urgency.id == urgencies.HIGH">!!</span>
+            </div>
+            <div class="name-box col-sm-7">
+                {{message.sender ? message.sender.name : message.from}}
+            </div>
+            <div class="time-box col-sm-3">
+                {{commonService.stringToDate(message.created_at) | date:'HH:mm'}}
             </div>
         </div>
     </div>

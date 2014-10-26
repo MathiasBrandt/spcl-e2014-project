@@ -32,6 +32,7 @@ public class Message extends Fragment {
     private String mParam2;
 
     Button submitButton;
+    Button cancelButton;
     EditText messageInput;
     RadioButton lowUrgencyRadio;
     RadioButton highUrgencyRadio;
@@ -73,6 +74,7 @@ public class Message extends Fragment {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
 
         submitButton = (Button) view.findViewById(R.id.submit_message_button);
+        cancelButton = (Button) view.findViewById(R.id.cancel_button);
         messageInput = (EditText) view.findViewById(R.id.message_field);
         lowUrgencyRadio = (RadioButton) view.findViewById(R.id.low_urgency_radio);
         highUrgencyRadio = (RadioButton) view.findViewById(R.id.high_urgency_radio);
@@ -89,6 +91,14 @@ public class Message extends Fragment {
                 int toUserId = 1; // get user id from tag instead
 
                 Common.addMessage(user.getId(), toUserId, null, urgency, messageInput.getText().toString().trim());
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // close activity
+                getActivity().finish();
             }
         });
 

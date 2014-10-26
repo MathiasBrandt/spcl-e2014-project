@@ -28,10 +28,16 @@
                 android:id="@+id/high_urgency_radio"/>
 
     </RadioGroup>
+
     <Button
-        android:id="@+id/submit_message_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/submit_message"/>
+            android:id="@+id/submit_message_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit_message"/>
+    <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"/>
 
 </LinearLayout>
