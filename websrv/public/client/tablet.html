@@ -32,37 +32,39 @@
             Thank you for your message!
         </div>
     </div>
-    <ul class="list-unstyled">
-        <li ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">
-            <div class="urgency-box">
+    <div class="container-fluid">
+        <div class="row" ng-repeat="message in messages | orderBy:'created_at':true | limitTo:10">
+            <div class="urgency-box col-sm-2">
                 <span ng-if="message.urgency.id == urgencies.LOW">!</span>
                 <span ng-if="message.urgency.id == urgencies.HIGH">!!</span>
             </div>
-            <div class="name-box">
+            <div class="name-box col-sm-7">
                 {{message.sender.name}}
             </div>
-            <div class="location-box">
+            <div class="time-box col-sm-3">
                 {{commonService.stringToDate(message.created_at) | date:'HH:mm'}}
             </div>
-        </li>
-    </ul>
+        </div>
+    </div>
     <div ng-if="user.status.id != statuses.AVAILABLE">
         <h2 class="text-center">Groups</h2>
         <div ng-repeat="group in groups">
-            <h3>{{group.name}}</h3>
-            <ul class="list-unstyled">
-                <li ng-repeat="groupUser in group.users | filter:exceptOwner | orderBy:['status.id','name']">
-                    <div class="status-box"
-                         ng-class="{ 'bg-green': groupUser.status.id == statuses.AVAILABLE, 'bg-red': groupUser.status.id == statuses.BUSY }">
-                     </div>
-                    <div class="name-box">
+            <h3 class="text-center">{{group.name}}</h3>
+            <div class="container-fluid">
+                <div class="row" ng-repeat="groupUser in group.users | filter:exceptOwner | orderBy:['status.id','name']">
+                    <div class="col-sm-2">
+                        <div class="status-box"
+                             ng-class="{ 'bg-green': groupUser.status.id == statuses.AVAILABLE, 'bg-red': groupUser.status.id == statuses.BUSY }">
+                        </div>
+                    </div>
+                    <div class="name-box col-sm-7">
                         {{groupUser.name}}
                     </div>
-                    <div class="location-box" ng-if="groupUser.location">
+                    <div class="location-box col-sm-3" ng-if="groupUser.location">
                         {{groupUser.location}}
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
