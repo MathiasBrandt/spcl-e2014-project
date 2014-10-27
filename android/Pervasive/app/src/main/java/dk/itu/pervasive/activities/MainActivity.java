@@ -1,6 +1,7 @@
 package dk.itu.pervasive.activities;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,6 +71,11 @@ public class MainActivity extends SingleFragmentActivity implements FragmentCall
     @Override
     public void createToast(String message) {
         Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public Intent accessNFCIntent() {
+        return null;
     }
 
 }

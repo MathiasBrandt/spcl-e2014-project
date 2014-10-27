@@ -1,35 +1,36 @@
 package dk.itu.pervasive.fragments;
 
 
-
-import android.os.Bundle;
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
+import android.nfc.FormatException;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+
+import org.ndeftools.Record;
+import org.ndeftools.wellknown.TextRecord;
+
+import java.util.List;
+
 import dk.itu.pervasive.R;
 import dk.itu.pervasive.common.Common;
 import dk.itu.pervasive.common.User;
+import dk.itu.pervasive.interfaces.FragmentCallback;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Message#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
 public class Message extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String TAG = "Message Fragment";
+    private String tabletId;
 
     Button submitButton;
     Button cancelButton;
@@ -37,22 +38,11 @@ public class Message extends Fragment {
     RadioButton lowUrgencyRadio;
     RadioButton highUrgencyRadio;
 
+    // Reference to call back to activity
+    private FragmentCallback fragmentCallback;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MessageActivity.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Message newInstance(String param1, String param2) {
+    public static Message newInstance() {
         Message fragment = new Message();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
     public Message() {
@@ -60,11 +50,48 @@ public class Message extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        fragmentCallback = (FragmentCallback) activity;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
+        try {
+            Intent NFCintent = fragmentCallback.accessNFCIntent();
+
+            Parcelable[] messageFromTag = NFCintent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            if (messageFromTag != null) {
+                Log.d(TAG, "Found " + messageFromTag.length + " NDEF messages");
+
+                // parse to records
+                for (int i = 0; i < messageFromTag.length; i++) {
+                    try {
+                        List<Record> records = new org.ndeftools.Message((NdefMessage) messageFromTag[i]);
+
+                        Log.d(TAG, "Found " + records.size() + " records in message " + i);
+
+                        for (int k = 0; k < records.size(); k++) {
+                            Log.d(TAG, " Record #" + k + " is of class " + records.get(k).getClass().getSimpleName());
+
+                            Record record = records.get(k);
+
+                            if (record instanceof TextRecord) {
+                                TextRecord tRec = (TextRecord) record;
+                                tabletId = tRec.getText().trim();
+                                Log.i(TAG, "Text is " + tRec.getText());
+                                fragmentCallback.createToast(tabletId);
+                            }
+                        }
+                    } catch (FormatException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Some problem");
         }
     }
 

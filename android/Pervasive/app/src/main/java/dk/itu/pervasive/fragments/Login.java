@@ -27,7 +27,7 @@ import dk.itu.pervasive.common.Common;
  *
  */
 public class Login extends Fragment {
-    private static final String TAG = "Login";
+    private static final String TAG = "Login fragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
