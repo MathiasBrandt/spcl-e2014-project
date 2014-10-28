@@ -60,6 +60,10 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
 
         var json = angular.toJson($scope.message);
         $scope.socket.emit('addMessage', json);
+
+        $scope.message = {
+            urgency_id: commonService.urgencies.LOW
+        };
     };
 
     $scope.userId = $location.search().user;

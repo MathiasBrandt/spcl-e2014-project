@@ -58,25 +58,31 @@
             <div class="form-group">
                 <input type="text" id="fromUser" class="form-control" placeholder="Your name" maxlength="255" ng-model="message.from" required>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom: 0px;">
                 <input type="text" id="messageText" class="form-control" placeholder="Message and contact info (optional)" maxlength="255" ng-model="message.message">
             </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.LOW" name="urgency">
-                    Low urgency
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.HIGH" name="urgency">
-                    High urgency
-                </label>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-default" ng-click="sendMessage()" ng-disabled="!message.from || !message.urgency_id">
-                    Send
-                </button>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.LOW" name="urgency">
+                            Low urgency
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.HIGH" name="urgency">
+                            High urgency
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <div class="form-group" style="margin-top: 15px;">
+                        <button type="submit" class="btn btn-default send-button" ng-click="sendMessage()" ng-disabled="!message.from || !message.urgency_id">
+                            Send
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

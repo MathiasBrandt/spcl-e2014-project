@@ -33,6 +33,11 @@ body {
     text-overflow: ellipsis;
 }
 
+.send-button {
+    width: 100%;
+    height: 3em;
+}
+
 .bg-green {
     background-color: lightgreen;
 }
