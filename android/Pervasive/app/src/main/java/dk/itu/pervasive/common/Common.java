@@ -48,6 +48,7 @@ public class Common {
     public static final String PARENT_KEY = "Parent";
     public static final String API_CREATE_USER = "http://178.62.255.11/users";
     public static final String API_LIST_USERS = "http://178.62.255.11/users";
+    public static final String API_VIEW_MESSAGES = "http://178.62.255.11/users/USERID/messages/USERTOKEN";
 
     public static final int USER_STATE_AVAILABLE = 1;
     public static final int USER_STATE_BUSY = 2;
