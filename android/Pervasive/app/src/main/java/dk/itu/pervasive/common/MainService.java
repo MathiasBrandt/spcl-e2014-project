@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import dk.itu.pervasive.R;
+import dk.itu.pervasive.activities.ViewMessagesActivity;
 import dk.itu.pervasive.common.sensorListeners.AccelSensorListener;
 import dk.itu.pervasive.common.sensorListeners.GravitySensorListener;
 import dk.itu.pervasive.common.sensorListeners.StopListeners;
@@ -59,7 +60,7 @@ public class MainService extends IntentService {
 
             }
         } else {
-            User user = Common.getUserFromPreferences();
+            User user = Common.getUserFromPreferences(this);
 
             createNotification("Hi " + user.getName() + "\nInterrupt service is now running... ", "Pervasive Project", "Turn over phone to set busy state",null, false, R.drawable.available);
 
@@ -131,8 +132,8 @@ public class MainService extends IntentService {
         //stopSensorIntent.putExtra("Listener", )
         PendingIntent closeServiceIntent = PendingIntent.getService(this, 0, stopSensorIntent, 0);
 
-        //Intent viewMessagesIntent = new Intent(this, ViewMessagesActivity.class);
-        //PendingIntent viewMessagesIntent = PendingIntent.getActivity(this, 0, viewMessagesIntent);
+        Intent viewMessagesIntent = new Intent(this, ViewMessagesActivity.class);
+        PendingIntent viewMessagePendingsIntent = PendingIntent.getActivity(this, 0, viewMessagesIntent, 0);
 
 
         Notification notification = new Notification.Builder(this)
@@ -147,7 +148,7 @@ public class MainService extends IntentService {
                 //.setUsesChronometer(timer)
                 .setVibrate(vibrations)
                 .addAction(android.R.drawable.ic_delete, "Close service", closeServiceIntent)
-                //.addAction(android.R.drawable.ic_menu_more, "View messages", viewMessagesIntent)
+                .addAction(android.R.drawable.ic_menu_more, "View messages", viewMessagePendingsIntent)
                 .build();
         NotificationManager notificationManager = (NotificationManager)
                 this.getSystemService(NOTIFICATION_SERVICE);

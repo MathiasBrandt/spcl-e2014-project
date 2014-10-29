@@ -52,7 +52,6 @@ public class Login extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Common.setContext(activity);
         fragmentCallback = (FragmentCallback)activity;
     }
 

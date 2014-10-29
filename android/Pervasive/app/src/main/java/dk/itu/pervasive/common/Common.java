@@ -92,25 +92,10 @@ public class Common {
 
     /***
      * Retrieves the user id stored in SharedPreferences.
-     * @param a an activity used for context.
+     * @param context an activity used for context.
      * @return the stored user or null if no user is exists in SharedPreferences.
      */
-    public static User getUserFromPreferences(Activity a) {
-        SharedPreferences preferences = a.getSharedPreferences(PREFERENCES_NAME, a.MODE_PRIVATE);
-        String userJson = preferences.getString(PREFERENCES_KEY_USER, null);
-        User user = Common.deserializeUser(userJson);
-
-        if(user != null) {
-            Log.d(TAG, String.format("User found in preferences: %s", userJson));
-        } else {
-            Log.d(TAG, String.format("No user found in preferences"));
-        }
-
-        return user;
-    }
-
-    /*@Deprecated
-    public static User getUserFromPreferences() {
+    public static User getUserFromPreferences(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME, context.MODE_PRIVATE);
         String userJson = preferences.getString(PREFERENCES_KEY_USER, null);
         User user = Common.deserializeUser(userJson);
@@ -122,7 +107,7 @@ public class Common {
         }
 
         return user;
-    }*/
+    }
 
     /***
      * Saves a user id to SharedPreferences.
