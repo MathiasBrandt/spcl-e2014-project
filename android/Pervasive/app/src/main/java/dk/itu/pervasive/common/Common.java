@@ -34,6 +34,8 @@ import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import dk.itu.pervasive.R;
+
 
 /**
  * Created by brandt on 27/09/14.

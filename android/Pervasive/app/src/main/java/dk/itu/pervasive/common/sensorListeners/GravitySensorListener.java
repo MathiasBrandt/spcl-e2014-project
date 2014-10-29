@@ -14,8 +14,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import dk.itu.pervasive.R;
 import dk.itu.pervasive.common.MainService;
-import dk.itu.pervasive.common.R;
 
 /**
  * Created by rnoe on 30/09/14.

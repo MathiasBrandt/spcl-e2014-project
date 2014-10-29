@@ -18,6 +18,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import dk.itu.pervasive.R;
 import dk.itu.pervasive.common.sensorListeners.AccelSensorListener;
 import dk.itu.pervasive.common.sensorListeners.GravitySensorListener;
 import dk.itu.pervasive.common.sensorListeners.StopListeners;
