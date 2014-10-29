@@ -61,6 +61,8 @@ public class Common {
     public static final String SOCKET_IO_STATUS_CHANGED = "statusChanged";
     public static final String SOCKET_IO_ADD_MESSAGE = "addMessage";
 
+    public static final String URL_CLIENT_PHONE = "http://178.62.255.11/client/phone.html";
+
     private Common() {}
 
     /***

@@ -2,7 +2,6 @@
 <resources>
 
     <string name="title_activity_view_messages">ViewMessagesActivity</string>
-
     <string name="app_name">Pervasive</string>
     <string name="action_settings">Settings</string>
     <string name="login_fragment">Login Fragment</string>
@@ -59,4 +58,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="state_busy">BUSY</string>
     <string name="state_available">AVAILABLE</string>
+    <string name="title_activity_web">WebActivity</string>
+
 </resources>

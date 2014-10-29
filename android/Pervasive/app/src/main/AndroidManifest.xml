@@ -17,11 +17,8 @@
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.MessageActivity"
             android:label="@string/title_activity_message" >
@@ -33,10 +30,18 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.ViewMessagesActivity"
             android:label="@string/title_activity_view_messages" >
+        </activity>
+        <activity
+            android:name=".activities.WebActivity"
+            android:label="@string/title_activity_web" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
