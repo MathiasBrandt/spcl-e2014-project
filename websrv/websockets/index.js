@@ -90,6 +90,8 @@ io.on('connection', function(socket) {
             console.error('error thrown by addMessage: ' + err.toString());
         }
     });
+
+    console.log('client connected');
 });
 
 http.listen(3000, function() {

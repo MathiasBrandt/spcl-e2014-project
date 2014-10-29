@@ -62,7 +62,6 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
         $scope.username = null;
         $scope.password = null;
         $scope.authenticated = false;
-        $scope.socket.disconnect();
     };
 
     $scope.statuses = commonService.statuses;
