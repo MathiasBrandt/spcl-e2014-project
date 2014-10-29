@@ -128,7 +128,10 @@ public class MainService extends IntentService {
         Intent stopSensorIntent = new Intent(this, MainService.class);
         stopSensorIntent.putExtra("STOP_SENSORS", true);
         //stopSensorIntent.putExtra("Listener", )
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0, stopSensorIntent, 0);
+        PendingIntent closeServiceIntent = PendingIntent.getService(this, 0, stopSensorIntent, 0);
+
+        Intent viewMessagesIntent = new Intent(this, ViewMessagesActivity.class);
+        //PendingIntent viewMessagesIntent = PendingIntent.getActivity(this, 0, viewMessagesIntent);
 
 
         Notification notification = new Notification.Builder(this)
@@ -142,7 +145,8 @@ public class MainService extends IntentService {
                 .setAutoCancel(true)
                 //.setUsesChronometer(timer)
                 .setVibrate(vibrations)
-                .addAction(android.R.drawable.ic_delete, "Close service", pendingIntent)
+                .addAction(android.R.drawable.ic_delete, "Close service", closeServiceIntent)
+                //.addAction(android.R.drawable.ic_menu_more, "View messages", viewMessagesIntent)
                 .build();
         NotificationManager notificationManager = (NotificationManager)
                 this.getSystemService(NOTIFICATION_SERVICE);

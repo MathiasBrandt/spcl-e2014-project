@@ -30,10 +30,16 @@
             android:name=".activities.MessageActivity"
             android:label="@string/title_activity_message" >
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.ViewMessagesActivity"
+            android:label="@string/title_activity_view_messages" >
         </activity>
     </application>
 
