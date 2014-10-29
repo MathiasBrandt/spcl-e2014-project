@@ -15,7 +15,7 @@ function handleMessage(name, data) {
 
     switch (name) {
         case 'setStatus':
-            path = '/users/' + data.user_id + '/status';
+            path = '/users/' + data.user_id + '/status/' + data['spcl-password'];
             method = 'PUT';
             body = JSON.stringify({
                 status_id: data.status_id

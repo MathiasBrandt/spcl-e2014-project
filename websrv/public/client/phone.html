@@ -2,9 +2,11 @@
 <html ng-app="spcl">
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
+    <script src="js/sha256.js"></script>
     <script src="js/angular-resource.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/common.js?e"></script>
@@ -15,21 +17,38 @@
 </head>
 <body ng-controller="phoneCtrl"
       ng-class="{ 'bg-green': user.status.id == statuses.AVAILABLE, 'bg-red': user.status.id == statuses.BUSY }">
-<div class="container">
-    <h1>You are {{user.status.description | uppercase}}</h1>
-    <div>
-        <button class="btn btn-default" ng-click="setStatus(statuses.AVAILABLE)">Available</button>
-        <button class="btn btn-default" ng-click="setStatus(statuses.BUSY)">Busy</button>
-    </div>
-    <h1>Messages</h1>
-    <div class="panel"
-         ng-class="{ 'panel-success': message.urgency.id == urgencies.LOW, 'panel-danger': message.urgency.id == urgencies.HIGH }"
-         ng-repeat="message in messages | orderBy:'created_at':true">
-        <div class="panel-heading">
-            <h1 class="panel-title">{{message.sender ? message.sender.name : message.from}} <small>at {{commonService.stringToDate(message.created_at) | date:'yyyy-MM-dd HH:mm'}}</small></h1>
+<div class="container-fluid">
+    <form ng-show="!authenticated">
+        <h1>Log in</h1>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Username" ng-model="username" required autofocus="true">
         </div>
-        <div class="panel-body" ng-if="message.message">
-            {{message.message}}
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" ng-model="password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default" ng-click="authenticate()" ng-disabled="!username || !password">
+                Log in
+            </button>
+        </div>
+    </form>
+    <div ng-show="authenticated">
+        <h1>You are {{user.status.description | uppercase}}</h1>
+        <div>
+            <button class="btn btn-default" ng-click="setStatus(statuses.AVAILABLE)">Available</button>
+            <button class="btn btn-default" ng-click="setStatus(statuses.BUSY)">Busy</button>
+            <button class="btn btn-default pull-right" ng-click="logout()">Log out</button>
+        </div>
+        <h1>Messages</h1>
+        <div class="panel"
+             ng-class="{ 'panel-success': message.urgency.id == urgencies.LOW, 'panel-danger': message.urgency.id == urgencies.HIGH }"
+             ng-repeat="message in messages | orderBy:'created_at':true">
+            <div class="panel-heading">
+                <h1 class="panel-title">{{message.sender ? message.sender.name : message.from}} <small>at {{commonService.stringToDate(message.created_at) | date:'yyyy-MM-dd HH:mm'}}</small></h1>
+            </div>
+            <div class="panel-body" ng-if="message.message">
+                {{message.message}}
+            </div>
         </div>
     </div>
 </div>
