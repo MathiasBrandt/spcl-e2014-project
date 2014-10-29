@@ -15,7 +15,7 @@ function handleMessage(name, data) {
 
     switch (name) {
         case 'setStatus':
-            path = '/users/' + data.user_id + '/status';
+            path = '/users/' + data.user_id + '/status/' + data['spcl-password'];
             method = 'PUT';
             body = JSON.stringify({
                 status_id: data.status_id
@@ -90,6 +90,8 @@ io.on('connection', function(socket) {
             console.error('error thrown by addMessage: ' + err.toString());
         }
     });
+
+    console.log('client connected');
 });
 
 http.listen(3000, function() {

@@ -6,7 +6,16 @@ function listUsers() {
 
 function getUser($id) {
     $user = User::with(array('status', 'groups'))->findOrFail($id);
+
     echo $user->toJson();
+}
+
+function login() {
+    $app = \Slim\Slim::getInstance();
+    $json = decodeJsonOrFail($app->request->getBody());
+    $user = User::where('username', '=', $json['username'])->where('password', '=', $json['password'])->firstOrFail();
+
+    getUser($user->id);
 }
 
 function updateUser($id) {
@@ -18,11 +27,16 @@ function updateUser($id) {
     echo $user->toJson();
 }
 
-function updateStatus($id) {
+function updateStatus($id, $password) {
     $app = Slim\Slim::getInstance();
     $json = decodeJsonOrFail($app->request->getBody());
     
     $user = User::with('status', 'groups')->findOrFail($id);
+
+    // authenticate
+    if($user->password !== $password)
+        throw new Exception();
+
     $status = Status::findOrFail($json['status_id']);
     $user->status()->associate($status);
     $user->save();

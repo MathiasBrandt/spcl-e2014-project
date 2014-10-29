@@ -28,11 +28,11 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
         });
 
         $scope.socket.on('messageAdded', function(data) {
-            console.log('messageAdded');
-            $scope.refreshMessages();
-
-            // show flash message and hide it after 5 seconds
             if(angular.fromJson(data).user_id == $scope.user.id) {
+                console.log('messageAdded');
+                $scope.refreshMessages();
+
+                // show flash message and hide it after 5 seconds
                 $scope.flashShown = true;
                 $timeout(function() {
                     $scope.flashShown = false;
