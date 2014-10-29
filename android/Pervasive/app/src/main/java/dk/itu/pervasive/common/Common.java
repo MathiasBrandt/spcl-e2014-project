@@ -48,7 +48,6 @@ public class Common {
     public static final String PARENT_KEY = "Parent";
     public static final String API_CREATE_USER = "http://178.62.255.11/users";
     public static final String API_LIST_USERS = "http://178.62.255.11/users";
-    private static Context context;
 
     public static final int USER_STATE_AVAILABLE = 1;
     public static final int USER_STATE_BUSY = 2;
@@ -62,11 +61,6 @@ public class Common {
     public static final String SOCKET_IO_ADD_MESSAGE = "addMessage";
 
     private Common() {}
-
-    public static void setContext(Activity activity) {
-        context = activity;
-    }
-
 
     /***
      * Serializes a user into JSON.
@@ -115,7 +109,7 @@ public class Common {
         return user;
     }
 
-    @Deprecated
+    /*@Deprecated
     public static User getUserFromPreferences() {
         SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME, context.MODE_PRIVATE);
         String userJson = preferences.getString(PREFERENCES_KEY_USER, null);
@@ -128,7 +122,7 @@ public class Common {
         }
 
         return user;
-    }
+    }*/
 
     /***
      * Saves a user id to SharedPreferences.
@@ -231,36 +225,6 @@ public class Common {
 
     public static void getUsers(Activity context, IOnCompleteListener onCompleteListener) {
         new GetUsersAsyncTask(context, onCompleteListener).execute();
-    }
-
-    /***
-     * Navigates the user interface to MainActivity.
-     */
-    public static void navigateToActivity(Activity from, Class<?> to) {
-        Intent i = new Intent(from, to);
-        from.startActivity(i);
-    }
-
-    // TODO: find references and refactor -- this should not be used!
-    @Deprecated
-    public static void navigateToActivity(Activity from, Class<?> to, Boolean keepInHistory) {
-        navigateToActivity(from, to, null, keepInHistory);
-    }
-
-    // TODO: find references and refactor -- this should not be used!
-    @Deprecated
-    public static void navigateToActivity(Activity from, Class<?> to, Class<?> parent, Boolean keepInHistory) {
-        Intent i = new Intent(from, to);
-
-        if(keepInHistory) {
-            i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        }
-
-        if(parent != null) {
-            i.putExtra(PARENT_KEY, parent);
-        }
-
-        from.startActivity(i);
     }
 
     /***
@@ -414,10 +378,6 @@ public class Common {
     public static void startMainService(Context context) {
         Intent serviceIntent = new Intent(context, MainService.class);
         context.startService(serviceIntent);
-    }
-
-    public static void stopService(Context context) {
-
     }
 
     public static void setStatus(int userId, int statusId) {
