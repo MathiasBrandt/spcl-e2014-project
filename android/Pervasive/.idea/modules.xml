@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Pervasive.iml" filepath="$PROJECT_DIR$/Pervasive.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tablet/tablet.iml" filepath="$PROJECT_DIR$/tablet/tablet.iml" />
     </modules>
   </component>
 </project>

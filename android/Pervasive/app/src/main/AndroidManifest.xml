@@ -22,10 +22,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <activity
             android:name=".activities.MessageActivity"
             android:label="@string/title_activity_message" >
@@ -37,6 +33,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.ViewMessagesActivity"
             android:label="@string/title_activity_view_messages" >

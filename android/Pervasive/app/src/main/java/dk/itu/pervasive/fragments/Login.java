@@ -12,9 +12,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import dk.itu.pervasive.R;
 import dk.itu.pervasive.interfaces.FragmentCallback;
 import dk.itu.pervasive.common.User;
@@ -98,7 +95,6 @@ public class Login extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_login, container, false);
         setupUiFields(view);
-        checkGooglePlayServices();
         return view;
     }
 
@@ -185,15 +181,6 @@ public class Login extends Fragment {
                 Common.removeUserInPreferences(getActivity());
             }
         });
-    }
-
-    private void checkGooglePlayServices() {
-        int result = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
-
-        if(result != ConnectionResult.SUCCESS) {
-            loginButton.setEnabled(false);
-            GooglePlayServicesUtil.getErrorDialog(result, getActivity(), 0).show();
-        }
     }
 
     private boolean isEmpty(EditText editText) {

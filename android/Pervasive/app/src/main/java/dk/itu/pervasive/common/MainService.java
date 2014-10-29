@@ -130,7 +130,7 @@ public class MainService extends IntentService {
         //stopSensorIntent.putExtra("Listener", )
         PendingIntent closeServiceIntent = PendingIntent.getService(this, 0, stopSensorIntent, 0);
 
-        Intent viewMessagesIntent = new Intent(this, ViewMessagesActivity.class);
+        //Intent viewMessagesIntent = new Intent(this, ViewMessagesActivity.class);
         //PendingIntent viewMessagesIntent = PendingIntent.getActivity(this, 0, viewMessagesIntent);
 
 
