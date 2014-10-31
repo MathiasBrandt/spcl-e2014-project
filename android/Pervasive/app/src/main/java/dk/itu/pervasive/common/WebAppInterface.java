@@ -34,4 +34,14 @@ public class WebAppInterface {
     public void nfcMessageAndId() {
         
     }
+
+    @JavascriptInterface
+    public void startMainService() {
+        // if a user id was found
+
+            Common.startMainService(mContext);
+
+            // closes activity --> service keeps running
+            //fragmentCallback.closeActivity();
+    }
 }
