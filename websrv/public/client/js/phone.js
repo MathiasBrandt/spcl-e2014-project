@@ -8,8 +8,6 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
     $scope.refreshUser = function() {
         commonService.users.get({id: $scope.user.id}, function(data) {
             $scope.user = data;
-
-            $scope.messageForm.from_user_id = $scope.user.id;
         });
     };
 
