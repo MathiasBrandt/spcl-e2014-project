@@ -47,13 +47,13 @@
             </div>
         </div>
     </div>
+    <div class="panel panel-success" ng-show="flashShown">
+        <div class="panel-heading">
+            Thank you for your message!
+        </div>
+    </div>
     <div ng-if="user.status.id != statuses.AVAILABLE">
         <h2 class="text-center">Leave message</h2>
-        <div class="panel panel-success" ng-show="flashShown">
-            <div class="panel-heading">
-                Thank you for your message!
-            </div>
-        </div>
         <form>
             <div class="form-group">
                 <input type="text" id="fromUser" class="form-control" placeholder="Your name" maxlength="255" ng-model="message.from" required>
