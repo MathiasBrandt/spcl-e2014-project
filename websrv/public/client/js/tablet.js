@@ -66,6 +66,12 @@ angular.module('spcl').controller('tabletCtrl', ['$scope', '$http', '$location',
         };
     };
 
+    $scope.cancelMessage = function() {
+        $scope.message = {
+            urgency_id: commonService.urgencies.LOW
+        }
+    };
+
     $scope.userId = $location.search().user;
     $scope.user = {};
     $scope.messages = [];

@@ -51,7 +51,7 @@
                     <input type="text" id="messageText" class="form-control" placeholder="Message (optional)" maxlength="255" ng-model="message.message">
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-xs-6">
                         <div class="radio">
                             <label>
                                 <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.LOW" name="urgency">
@@ -65,10 +65,13 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-sm-6 text-center">
-                        <div class="form-group" style="margin-top: 15px;">
+                    <div class="col-xs-6 text-center">
+                        <div class="form-group btn-group-vertical" style="margin-top: 15px; width: 100%;">
                             <button type="submit" class="btn btn-default send-button" ng-click="sendMessage()" ng-disabled="!message.to_user_id || !message.urgency_id">
                                 Send
+                            </button>
+                            <button class="btn btn-default btn-sm send-button" ng-click="cancelMessage()">
+                                Cancel
                             </button>
                         </div>
                     </div>
