@@ -95,7 +95,7 @@ public class WebActivity extends Activity {
                Log.e(TAG, "Some problem");
            }
 
-           webView.loadUrl("javascript:nfcReceived(1)");
+           webView.loadUrl("javascript:nfcReceived("+ tabletId + ")");
        }
     }
 
