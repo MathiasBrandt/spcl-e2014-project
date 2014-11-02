@@ -110,4 +110,10 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
     window.nfcReceived = function(tagId) {
         $scope.initializeMessageForm(tagId);
     };
+    window.phoneTurned = function() {
+        $scope.setStatus(commonService.statuses.BUSY);
+    };
+    window.phoneShaken = function() {
+        $scope.setStatus(commonService.statuses.AVAILABLE);
+    };
 }]);
