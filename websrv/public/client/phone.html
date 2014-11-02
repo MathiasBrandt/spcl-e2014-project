@@ -19,7 +19,7 @@
       ng-class="{ 'bg-green': user.status.id == statuses.AVAILABLE, 'bg-red': user.status.id == statuses.BUSY }">
 <div class="container-fluid">
     <form ng-show="!authenticated">
-        <h1>Log in</h1>
+        <h2 class="text-center">Log in</h2>
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Username" ng-model="username" required autofocus="true">
         </div>
@@ -33,7 +33,7 @@
         </div>
     </form>
     <div ng-show="authenticated">
-        <h1>
+        <h1 class="text-center">
             <small>{{user.name}}</small><br>
             {{user.status.description | uppercase}}
         </h1>
@@ -81,7 +81,7 @@
                 </div>
             </form>
         </div>
-        <h1>Messages</h1>
+        <h2 class="text-center">Messages</h2>
         <div class="panel"
              ng-class="{ 'panel-success': message.urgency.id == urgencies.LOW, 'panel-danger': message.urgency.id == urgencies.HIGH }"
              ng-repeat="message in messages | orderBy:'created_at':true">
