@@ -20,11 +20,13 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
         });
 
         $scope.socket.on('messageAdded', function(data) {
-            console.log('messageAdded');
-            $scope.refreshMessages();
+            if(angular.fromJson(data).user_id == $scope.user.id) {
+                console.log('messageAdded');
+                $scope.refreshMessages();
 
-            if(Android.messageReceived)
-                Android.messageReceived();
+                if (typeof Android != 'undefined')
+                    Android.messageReceived();
+            }
         });
 
         $scope.socket.on('phoneUpdated', function() {
@@ -34,7 +36,7 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
         $scope.refreshUser();
         $scope.refreshMessages();
 
-        if(Android.startMainService)
+        if (typeof Android != 'undefined')
             Android.startMainService();
     };
 
@@ -69,7 +71,7 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
         $scope.password = null;
         $scope.authenticated = false;
 
-        if(Android.stopMainService)
+        if (typeof Android != 'undefined')
             Android.stopMainService();
     };
 
