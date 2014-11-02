@@ -33,7 +33,10 @@
         </div>
     </form>
     <div ng-show="authenticated">
-        <h1>You are {{user.status.description | uppercase}}</h1>
+        <h1>
+            <small>{{user.name}}</small><br>
+            {{user.status.description | uppercase}}
+        </h1>
         <div>
             <button class="btn btn-default" ng-click="setStatus(statuses.AVAILABLE)">Available</button>
             <button class="btn btn-default" ng-click="setStatus(statuses.BUSY)">Busy</button>
