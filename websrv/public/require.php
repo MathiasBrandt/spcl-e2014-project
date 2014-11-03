@@ -3,6 +3,7 @@ require '../vendor/autoload.php';
 require '../app/model/Group.class.php';
 require '../app/model/Message.class.php';
 require '../app/model/Status.class.php';
+require '../app/model/StatusChange.class.php';
 require '../app/model/Urgency.class.php';
 require '../app/model/User.class.php';
 require '../app/common.php';

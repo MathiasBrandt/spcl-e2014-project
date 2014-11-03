@@ -40,6 +40,12 @@ function updateStatus($id, $password) {
     $status = Status::findOrFail($json['status_id']);
     $user->status()->associate($status);
     $user->save();
+
+    $statusChange = new StatusChange();
+    $statusChange->user()->associate($user);
+    $statusChange->status()->associate($status);
+    $statusChange->save();
+
     echo $user->toJson();
 
     //sendSyncMessage($user->id, true);
