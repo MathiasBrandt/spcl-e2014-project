@@ -37,8 +37,8 @@
     <string name="btnLoginExistingUser">Login With Existing User</string>
     <string name="btnSwitchUser">Switch User</string>
     <string name="btnLogout">Logout</string>
-    <string name="btnYes">YES</string>
-    <string name="btnNo">NO</string>
+    <string name="btnYes">Yes</string>
+    <string name="btnNo">No</string>
     <string name="btnOk">OK</string>
     <string name="select_user">Please select an existing user to proceed</string>
     <string name="please_wait_message">Please wait ...</string>
