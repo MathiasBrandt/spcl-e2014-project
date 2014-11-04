@@ -1,5 +1,6 @@
 package dk.itu.pervasive.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -104,6 +105,10 @@ public class WebActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
 
+        // disable action bar
+        ActionBar ab = getActionBar();
+        ab.hide();
+
         // initialize NFC
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, this.getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -121,6 +126,7 @@ public class WebActivity extends Activity {
 
         webViewProgressDialog = new ProgressDialog(this);
         webViewProgressDialog.setTitle("Loading ...");
+        webViewProgressDialog.setCancelable(false);
 
         webView.setWebViewClient(new WebViewClient() {
 

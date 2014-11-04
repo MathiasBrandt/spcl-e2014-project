@@ -60,9 +60,9 @@ public class MainService extends IntentService {
 
             }
         } else {
-            User user = Common.getUserFromPreferences(this);
+            //User user = Common.getUserFromPreferences(this);
 
-            createNotification("Hi " + user.getName() + "\nInterrupt service is now running... ", "Pervasive Project", "Turn over phone to set busy state",null, false, R.drawable.available);
+            createNotification("Interrupt service is now running... ", "Pervasive Project", "Turn over phone to set busy state",null, false, R.drawable.available);
 
 
             // Start GRAVITY SENSOR
@@ -82,7 +82,7 @@ public class MainService extends IntentService {
         if (mGravitySensor != null) {
             mSensorManager.registerListener(mGravitySensorListener, mGravitySensor,
                     SensorManager.SENSOR_DELAY_NORMAL);
-            Log.i(TAG, "Registerered for Gravity Sensor");
+            Log.i(TAG, "Registered for Gravity Sensor");
 
         }
     }

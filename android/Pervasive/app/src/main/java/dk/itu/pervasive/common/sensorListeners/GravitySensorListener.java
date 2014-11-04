@@ -33,7 +33,7 @@ public class GravitySensorListener implements SensorEventListener {
     }
 
     public void onSensorChanged(SensorEvent event) {
-        Log.i(TAG, "" + StopListeners.getSTOP_SENSOR());
+        //Log.i(TAG, "" + StopListeners.getSTOP_SENSOR());
 
         if(!(StopListeners.getSTOP_SENSOR())) {
             float x = event.values[0];
@@ -70,7 +70,8 @@ public class GravitySensorListener implements SensorEventListener {
 
                 // Implement start of accelerometer sensor to listen for shake event
             }
-            Log.i(TAG, "x: " + x + "y: " + y + "z: " + z);
+
+            //Log.i(TAG, "x: " + x + "y: " + y + "z: " + z);
         } else {
             Log.i(TAG, "About to turn of gravity sensor");
             mMainService.mSensorManager = (SensorManager) mMainService.getSystemService(Context.SENSOR_SERVICE);
