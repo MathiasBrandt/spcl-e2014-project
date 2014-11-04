@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <alpha
+        android:fromAlpha="1.0"
+        android:toAlpha="0.0"
+        android:duration="1000"
+        />
+
+    <translate
+        android:fromYDelta="0%p"
+        android:toYDelta="20%p"
+        android:duration="600"
+        />
+</set><!-- From: file:/Users/rnoe/Development/git/spcl/android/Pervasive/common/src/main/res/anim/logout_button_out.xml --><!-- From: file:/Users/rnoe/Development/git/spcl/android/Pervasive/tablet/build/intermediates/exploded-aar/Pervasive/common/unspecified/res/anim/logout_button_out.xml -->

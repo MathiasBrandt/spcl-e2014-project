@@ -368,6 +368,12 @@ public class Common {
         context.startService(serviceIntent);
     }
 
+    public static void stopMainService(Context context) {
+        Intent stopSensorIntent = new Intent(context, MainService.class);
+        stopSensorIntent.putExtra("STOP_SENSORS", true);
+        context.startService(stopSensorIntent);
+    }
+
     public static void setStatus(int userId, int statusId) {
         UserStatus status = new UserStatus(userId, statusId);
         new setStatusAsyncTask(status).execute();

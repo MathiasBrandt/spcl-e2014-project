@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="dk.itu.pervasive.tablet.activities.MainActivity" >
+
+    <item
+        android:id="@+id/menu_item_logout"
+        android:title="@string/menu_item_logout"
+        android:showAsAction="always" />
+
+</menu>
+<!-- From: file:/Users/rnoe/Development/git/spcl/android/Pervasive/tablet/src/main/res/menu/main.xml -->

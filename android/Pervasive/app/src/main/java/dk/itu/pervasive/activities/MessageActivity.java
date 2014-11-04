@@ -57,7 +57,7 @@ public class MessageActivity extends SingleFragmentActivity implements FragmentC
 
     @Override
     public void closeActivity() {
-
+        finish();
     }
 
     @Override

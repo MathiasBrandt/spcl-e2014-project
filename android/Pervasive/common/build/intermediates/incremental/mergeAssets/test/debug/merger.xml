@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="5.2.08" >
+        <source path="/Users/rnoe/Development/git/spcl/android/Pervasive/common/build/intermediates/exploded-aar/com.google.android.gms/play-services/5.2.08/assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/Users/rnoe/Development/git/spcl/android/Pervasive/common/build/intermediates/bundles/debug/assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="/Users/rnoe/Development/git/spcl/android/Pervasive/common/src/androidTest/assets" />
+    </dataSet>
+
+</merger>

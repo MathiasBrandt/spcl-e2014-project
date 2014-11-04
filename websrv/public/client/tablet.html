@@ -26,6 +26,48 @@
         <span ng-if="user.status.id == statuses.AVAILABLE">(feel free to knock)</span>
         <span ng-if="user.status.id == statuses.BUSY">(please leave a message)</span>
     </p>
+    <div class="panel panel-success" ng-show="flashShown">
+        <div class="panel-heading">
+            Thank you for your message!
+        </div>
+    </div>
+    <div ng-if="user.status.id != statuses.AVAILABLE">
+        <h2 class="text-center">Leave message</h2>
+        <form>
+            <div class="form-group">
+                <input type="text" id="fromUser" class="form-control" placeholder="Your name" maxlength="255" ng-model="message.from">
+            </div>
+            <div class="form-group" style="margin-bottom: 0px;">
+                <input type="text" id="messageText" class="form-control" placeholder="Message and contact info (optional)" maxlength="255" ng-model="message.message">
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.LOW" name="urgency">
+                            Low urgency
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.HIGH" name="urgency">
+                            High urgency
+                        </label>
+                    </div>
+                </div>
+                <div class="col-xs-6 text-center">
+                    <div class="form-group btn-group-vertical" style="margin-top: 15px; width: 100%;">
+                        <button type="submit" class="btn btn-default send-button" ng-click="sendMessage()" ng-disabled="!message.from || !message.urgency_id">
+                            Send
+                        </button>
+                        <button class="btn btn-default btn-sm send-button" ng-click="cancelMessage()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     <div ng-if="user.status.id != statuses.AVAILABLE">
         <h2 class="text-center">Groups</h2>
         <div ng-repeat="group in groups">
@@ -46,45 +88,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div ng-if="user.status.id != statuses.AVAILABLE">
-        <h2 class="text-center">Leave message</h2>
-        <div class="panel panel-success" ng-show="flashShown">
-            <div class="panel-heading">
-                Thank you for your message!
-            </div>
-        </div>
-        <form>
-            <div class="form-group">
-                <input type="text" id="fromUser" class="form-control" placeholder="Your name" maxlength="255" ng-model="message.from" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 0px;">
-                <input type="text" id="messageText" class="form-control" placeholder="Message and contact info (optional)" maxlength="255" ng-model="message.message">
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.LOW" name="urgency">
-                            Low urgency
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" ng-model="message.urgency_id" ng-value="urgencies.HIGH" name="urgency">
-                            High urgency
-                        </label>
-                    </div>
-                </div>
-                <div class="col-sm-6 text-center">
-                    <div class="form-group" style="margin-top: 15px;">
-                        <button type="submit" class="btn btn-default send-button" ng-click="sendMessage()" ng-disabled="!message.from || !message.urgency_id">
-                            Send
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
     </div>
     <h2 class="text-center">Latest Visitors</h2>
     <div class="container-fluid">

@@ -115,9 +115,12 @@ public class Message extends Fragment {
                     return;
 
                 int urgency = highUrgencyRadio.isChecked() ? Common.URGENCY_HIGH : Common.URGENCY_LOW;
-                int toUserId = 1; // get user id from tag instead
+                int toUserId = Integer.parseInt(tabletId);
+                Log.i(TAG, "toUserId= " + toUserId + "\n" + "user: " + user.getName());
 
                 Common.addMessage(user.getId(), toUserId, null, urgency, messageInput.getText().toString().trim());
+                fragmentCallback.createToast("Message was sent. See you later...");
+                fragmentCallback.closeActivity();
             }
         });
 
