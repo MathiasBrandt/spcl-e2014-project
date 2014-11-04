@@ -22,8 +22,4 @@ public class WebAppInterface {
     public void CreateNotification() {
 
     }
-
-    public void NogetMedNFC() {
-        
-    }
 }
