@@ -32,9 +32,11 @@
             Thank you for your message!
         </div>
     </div>
-    <div ng-if="user.status.id != statuses.AVAILABLE">
-        <h2 class="text-center">Leave message</h2>
-        <form>
+    <div ng-show="user.status.id != statuses.AVAILABLE">
+        <h2 class="text-center" ng-click="formShown = !formShown">
+            {{formShown ? '- Leave a message' : '+ Leave a message'}}
+        </h2>
+        <form ng-show="formShown">
             <div class="form-group">
                 <input type="text" id="fromUser" class="form-control" placeholder="Your name" maxlength="255" ng-model="message.from">
             </div>
@@ -69,7 +71,7 @@
             </div>
         </form>
     </div>
-    <div ng-if="user.status.id != statuses.AVAILABLE">
+    <div ng-show="user.status.id != statuses.AVAILABLE">
         <h2 class="text-center">Groups</h2>
         <div ng-repeat="group in groups">
             <h3 class="text-center">{{group.name}}</h3>

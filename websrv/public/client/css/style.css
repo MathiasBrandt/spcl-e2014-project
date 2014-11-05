@@ -13,12 +13,11 @@ body {
 }
 
 .urgency-box {
-    text-align: right;
     font-weight: bolder;
 }
 
 .location-box {
-    text-align: right;
+    text-align: center;
     font-weight: bolder;
 }
 
