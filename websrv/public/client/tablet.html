@@ -23,6 +23,9 @@
     <h1 class="text-center" style="margin-bottom: 0px">
         {{user.status.description | uppercase}}
     </h1>
+    <h2 class="text-center" ng-if="user.status_message">
+        {{user.status_message}}
+    </h2>
     <p class="text-center">
         <span ng-if="user.status.id == statuses.AVAILABLE">(feel free to knock)</span>
         <span ng-if="user.status.id == statuses.BUSY">(please leave a message)</span>

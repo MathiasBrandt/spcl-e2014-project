@@ -18,11 +18,16 @@ function login() {
     getUser($user->id);
 }
 
-function updateUser($id) {
+function updateUser($id, $password) {
     $app = Slim\Slim::getInstance();
     $json = decodeJsonOrFail($app->request->getBody());
-    
-    $user = User::findOrFail($id);
+
+    $user = User::with('status', 'groups')->findOrFail($id);
+
+    // authenticate
+    if($user->password !== $password)
+        throw new Exception();
+
     $user->update($json);
     echo $user->toJson();
 }
@@ -37,13 +42,18 @@ function updateStatus($id, $password) {
     if($user->password !== $password)
         throw new Exception();
 
-    $status = Status::findOrFail($json['status_id']);
+    $statusId = $json['status_id'];
+    $statusMessage = $json['status_message'];
+
+    $status = Status::findOrFail($statusId);
     $user->status()->associate($status);
+    $user->status_message = $statusMessage;
     $user->save();
 
     $statusChange = new StatusChange();
     $statusChange->user()->associate($user);
     $statusChange->status()->associate($status);
+    $statusChange->status_message = $statusMessage;
     $statusChange->save();
 
     echo $user->toJson();

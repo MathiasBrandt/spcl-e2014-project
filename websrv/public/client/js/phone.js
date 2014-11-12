@@ -46,6 +46,7 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
         var json = angular.toJson({
             user_id: $scope.user.id,
             status_id: statusId,
+            status_message: $scope.user.status_message,
             'spcl-password': Sha256.hash($scope.password)
         });
 
@@ -99,6 +100,32 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
         $scope.showMessageForm = false;
     };
 
+    $scope.setStatusMessage = function() {
+        if(!$scope.user.status_message)
+            return;
+
+        $scope.setStatus($scope.user.status.id);
+    };
+
+    $scope.openChangePasswordForm = function() {
+        $scope.newPassword = null;
+        $scope.showChangePasswordForm = true;
+    };
+
+    $scope.updatePassword = function() {
+        if(!$scope.newPassword)
+            return;
+
+        var json = angular.toJson({
+            password: Sha256.hash($scope.newPassword)
+        });
+
+        commonService.users.update({id: $scope.user.id, password: Sha256.hash($scope.password)}, json, function() {
+            $scope.newPassword = null;
+            $scope.showChangePasswordForm = false;
+        });
+    };
+
     $scope.statuses = commonService.statuses;
     $scope.urgencies = commonService.urgencies;
     $scope.commonService = commonService;
@@ -107,6 +134,8 @@ angular.module('spcl').controller('phoneCtrl', ['$scope', '$location', '$timeout
     $scope.username = null;
     $scope.password = null;
     $scope.showMessageForm = false;
+    $scope.newPassword = null;
+    $scope.showChangePasswordForm = false;
 
     // global function to be called from android
     window.nfcReceived = function(tagId) {

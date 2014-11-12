@@ -19,9 +19,9 @@ $app->response->headers->set('Content-Type', 'application/json');
 
 $app->get('/users', 'listUsers');
 $app->get('/users/:id', 'getUser');
-//$app->put('/users/:id', 'updateUser');
+$app->put('/users/:id/:password', 'updateUser');
 $app->put('/users/:id/status/:password', 'updateStatus');
-$app->post('/users', 'createUser');
+//$app->post('/users', 'createUser');
 $app->post('/login', 'login');
 
 $app->get('/groups', 'listGroups');

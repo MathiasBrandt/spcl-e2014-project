@@ -18,7 +18,8 @@ function handleMessage(name, data) {
             path = '/users/' + data.user_id + '/status/' + data['spcl-password'];
             method = 'PUT';
             body = JSON.stringify({
-                status_id: data.status_id
+                status_id: data.status_id,
+                status_message: data.status_message
             });
             eventName = 'statusChanged';
             eventBody = JSON.stringify({
@@ -60,6 +61,7 @@ function handleMessage(name, data) {
 
     request.on('error', function() {
         console.error('error in api request');
+        console.log(body);
     });
     request.write(body);
     request.end();

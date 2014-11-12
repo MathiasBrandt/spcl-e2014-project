@@ -3,7 +3,11 @@ angular.module('spcl', ['ngResource'])
         var self = this;
 
         this.messages = $resource('/users/:id/messages/:password');
-        this.users    = $resource('/users/:id');
+        this.users    = $resource('/users/:id/:password', {}, {
+            update: {
+                method: 'PUT'
+            }
+        });
         this.groups   = $resource('/groups/:id');
         this.login    = $resource('/login');
 
