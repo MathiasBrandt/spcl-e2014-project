@@ -42,7 +42,7 @@ function handleMessage(name, data) {
     var responseData = '';
     var request = client.request({
         hostname: 'localhost',
-        port: 80,
+        port: 8888,
         path: path,
         method: method
     }, function(response) {
